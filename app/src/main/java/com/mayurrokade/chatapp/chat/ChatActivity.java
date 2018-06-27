@@ -20,16 +20,38 @@
  * IN THE SOFTWARE.
  */
 
-package com.mayurrokade.chatapp;
+package com.mayurrokade.chatapp.chat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ChatActivity extends AppCompatActivity {
+import com.mayurrokade.chatapp.R;
+
+public class ChatActivity extends AppCompatActivity implements ChatContract.View {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void setPresenter(ChatContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
     }
 }

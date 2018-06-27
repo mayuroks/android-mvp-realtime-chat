@@ -20,22 +20,11 @@
  * IN THE SOFTWARE.
  */
 
-package com.mayurrokade.chatapp.util;
+package com.mayurrokade.chatapp;
 
-public class TextUtils {
+public interface BasePresenter {
 
-    /**
-     * @param str - Check if the string is not null or empty.
-     * @return boolean - Returns true if the string is valid.
-     */
-    public static boolean isValidString(String str) {
-        if (str != null
-                && str.length() > 0
-                && !str.isEmpty()
-                && !str.equalsIgnoreCase("")) {
-            return true;
-        }
+    void subscriber();
 
-        return false;
-    }
+    void unsubscribe();
 }

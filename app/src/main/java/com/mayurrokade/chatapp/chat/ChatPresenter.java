@@ -20,22 +20,16 @@
  * IN THE SOFTWARE.
  */
 
-package com.mayurrokade.chatapp.util;
+package com.mayurrokade.chatapp.chat;
 
-public class TextUtils {
+public class ChatPresenter implements ChatContract.Presenter {
+    @Override
+    public void subscriber() {
 
-    /**
-     * @param str - Check if the string is not null or empty.
-     * @return boolean - Returns true if the string is valid.
-     */
-    public static boolean isValidString(String str) {
-        if (str != null
-                && str.length() > 0
-                && !str.isEmpty()
-                && !str.equalsIgnoreCase("")) {
-            return true;
-        }
+    }
 
-        return false;
+    @Override
+    public void unsubscribe() {
+
     }
 }
