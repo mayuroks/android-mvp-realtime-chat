@@ -24,15 +24,23 @@ package com.mayurrokade.chatapp.chat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mayurrokade.chatapp.R;
+import com.mayurrokade.chatapp.data.ChatMessage;
+import com.mayurrokade.chatapp.util.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -45,14 +53,25 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
     private Socket mSocket;
     private boolean mTyping;
     private boolean isConnected;
+    private RecyclerView rvChatMessages;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ChatAdapter mChatAdapter;
+    private EditText etSendMessage;
+    private Button btnSendMessage;
 
     // TODO show popup to set username
-    private String mUsername = "EquinoX_App";
+    private String mUsername = "EquinoX_Tester";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        rvChatMessages = findViewById(R.id.rvChatMessages);
+        etSendMessage = findViewById(R.id.etSendMessage);
+        btnSendMessage = findViewById(R.id.btnSendMessage);
+
+        setupChatMessages();
+        setupSendButton();
 
         try {
             mSocket = IO.socket(SOCKET_URL);
@@ -65,9 +84,17 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
             mSocket.on("user left", onUserLeft);
             mSocket.on("typing", onTyping);
             mSocket.on("stop typing", onStopTyping);
-
+            mSocket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mSocket != null) {
+            mSocket.disconnect();
         }
     }
 
@@ -91,6 +118,25 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
 
     }
 
+    private void setupChatMessages() {
+        mChatAdapter = new ChatAdapter(new ArrayList<ChatMessage>(), this);
+        mLayoutManager = new LinearLayoutManager(this);
+        rvChatMessages.setAdapter(mChatAdapter);
+        rvChatMessages.setLayoutManager(mLayoutManager);
+    }
+
+    private void setupSendButton() {
+        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = etSendMessage.getText().toString().trim();
+                if (TextUtils.isValidString(message)) {
+                    etSendMessage.setText("");
+                    sendMessage(message);
+                }
+            }
+        });
+    }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
@@ -98,6 +144,7 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.i(TAG, "connected");
                     if (!isConnected) {
                         if (null != mUsername)
                             mSocket.emit("add user", mUsername);
@@ -262,6 +309,11 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         }
     };
 
+    private void sendMessage(String message) {
+        addMessage(mUsername, message);
+        mSocket.emit("new message", message);
+    }
+
     private void addParticipantsLog(int numUsers) {
 
     }
@@ -271,7 +323,9 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
     }
 
     private void addMessage(String username, String message) {
-
+        ChatMessage chatMessage = new ChatMessage(username, message);
+        mChatAdapter.addNewMessage(chatMessage);
+        rvChatMessages.scrollToPosition(mChatAdapter.getItemCount() - 1);
     }
 
     private void removeTyping(String username) {
