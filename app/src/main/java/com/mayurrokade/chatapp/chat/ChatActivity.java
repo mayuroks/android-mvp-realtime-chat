@@ -33,9 +33,13 @@ import android.widget.EditText;
 
 import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.data.ChatMessage;
+import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.eventservice.EventService;
 import com.mayurrokade.chatapp.eventservice.EventServiceImpl;
 import com.mayurrokade.chatapp.util.TextUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -43,7 +47,9 @@ import java.util.ArrayList;
 /*
 * */
 
-public class ChatActivity extends AppCompatActivity implements ChatContract.View {
+public class ChatActivity
+        extends AppCompatActivity
+        implements ChatContract.View, EventListener {
 
     private static final String TAG = ChatActivity.class.getSimpleName();
     private RecyclerView rvChatMessages;
@@ -70,6 +76,7 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
 
         try {
             mEventService.connect(mUsername);
+            mEventService.setEventListener(this);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -133,5 +140,46 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
     private void addMessage(ChatMessage chatMessage) {
         mChatAdapter.addNewMessage(chatMessage);
         rvChatMessages.scrollToPosition(mChatAdapter.getItemCount() - 1);
+    }
+
+    @Override
+    public void onConnect(final Object... args) {
+
+    }
+
+    @Override
+    public void onDisconnect(final Object... args) {
+
+    }
+
+    @Override
+    public void onConnectError(final Object... args) {
+
+    }
+
+    @Override
+    public void onConnectTimeout(final Object... args) {
+
+    }
+
+    @Override
+    public void onNewMessage(final Object... args) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                JSONObject data = (JSONObject) args[0];
+                String username;
+                String message;
+                try {
+                    username = data.getString("username");
+                    message = data.getString("message");
+                    ChatMessage chatMessage = new ChatMessage(username, message);
+                    addMessage(chatMessage);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                    return;
+                }
+            }
+        });
     }
 }

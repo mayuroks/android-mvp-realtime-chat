@@ -28,9 +28,11 @@ import java.net.URISyntaxException;
 
 public interface EventService {
 
-    void sendMessage(ChatMessage chatMessage);
-
     void connect(String username) throws URISyntaxException;
 
     void disconnect();
+
+    void setEventListener(EventListener listener);
+
+    void sendMessage(ChatMessage chatMessage);
 }

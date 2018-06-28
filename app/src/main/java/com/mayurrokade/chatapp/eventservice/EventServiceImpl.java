@@ -48,6 +48,7 @@ public class EventServiceImpl implements EventService {
 
     private static final String TAG = EventServiceImpl.class.getSimpleName();
     private static EventService INSTANCE;
+    private static EventListener mEventListener;
     private static final String SOCKET_URL = "https://socket-io-chat.now.sh";
     private static Socket mSocket;
     private String mUsername;
@@ -85,11 +86,18 @@ public class EventServiceImpl implements EventService {
         if (mSocket != null) mSocket.disconnect();
     }
 
+    @Override
+    public void setEventListener(EventListener listener) {
+        mEventListener = listener;
+    }
+
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Log.i(TAG, "call: onConnect");
             mSocket.emit("add user", mUsername);
+
+            if (mEventListener != null) mEventListener.onConnect(args);
             // mSocket.emit("add user", mUsername);
             // Toast show connected
         }
@@ -99,7 +107,7 @@ public class EventServiceImpl implements EventService {
         @Override
         public void call(Object... args) {
             Log.i(TAG, "call: onDisconnect");
-            // Toast show disconnected
+            if (mEventListener != null) mEventListener.onDisconnect(args);
         }
     };
 
@@ -107,7 +115,7 @@ public class EventServiceImpl implements EventService {
         @Override
         public void call(Object... args) {
             Log.i(TAG, "call: onConnectError");
-            // Toast error connecting
+            if (mEventListener != null) mEventListener.onConnectError(args);
         }
     };
 
@@ -115,16 +123,7 @@ public class EventServiceImpl implements EventService {
         @Override
         public void call(final Object... args) {
             Log.i(TAG, "call: onNewMessage");
-//            JSONObject data = (JSONObject) args[0];
-//            String username;
-//            String message;
-//            try {
-//                username = data.getString("username");
-//                message = data.getString("message");
-//            } catch (JSONException e) {
-//                Log.e(TAG, e.getMessage());
-//                return;
-//            }
+            if (mEventListener != null) mEventListener.onNewMessage(args);
         }
     };
 }

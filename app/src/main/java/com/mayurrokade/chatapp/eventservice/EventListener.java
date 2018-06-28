@@ -24,13 +24,13 @@ package com.mayurrokade.chatapp.eventservice;
 
 public interface EventListener {
 
-    void onConnect();
+    void onConnect(Object... args);
 
-    void onDisconnect();
+    void onDisconnect(Object... args);
 
-    void onConnectError();
+    void onConnectError(Object... args);
 
-    void onConnectTimeout();
+    void onConnectTimeout(Object... args);
 
-    void onNewMessage();
+    void onNewMessage(Object... args);
 }
