@@ -36,13 +36,10 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
 
+import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-
-/*
-* TODO add EventListener in all EmitterListeners
-* */
 
 public class EventServiceImpl implements EventService {
 
@@ -96,10 +93,7 @@ public class EventServiceImpl implements EventService {
         public void call(Object... args) {
             Log.i(TAG, "call: onConnect");
             mSocket.emit("add user", mUsername);
-
             if (mEventListener != null) mEventListener.onConnect(args);
-            // mSocket.emit("add user", mUsername);
-            // Toast show connected
         }
     };
 

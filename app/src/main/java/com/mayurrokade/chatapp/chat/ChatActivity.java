@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.data.ChatMessage;
@@ -99,6 +100,19 @@ public class ChatActivity
     }
 
     @Override
+    public void showMessage(final String message, boolean isError) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(),
+                        message,
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+    }
+
+    @Override
     public void showProgress() {
 
     }
@@ -144,21 +158,23 @@ public class ChatActivity
 
     @Override
     public void onConnect(final Object... args) {
-
+        showMessage("Connected", false);
     }
 
     @Override
     public void onDisconnect(final Object... args) {
+        showMessage("Disconnected", false);
 
     }
 
     @Override
     public void onConnectError(final Object... args) {
-
+        showMessage("Connection Error", false);
     }
 
     @Override
     public void onConnectTimeout(final Object... args) {
+        showMessage("Connection Timeout", false);
 
     }
 

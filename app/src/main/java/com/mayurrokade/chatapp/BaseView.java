@@ -28,6 +28,8 @@ public interface BaseView<T> {
 
     void setPresenter(T presenter);
 
+    void showMessage(String message, boolean isError);
+
     void showProgress();
 
     void hideProgress();
