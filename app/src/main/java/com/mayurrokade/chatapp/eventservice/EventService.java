@@ -22,6 +22,15 @@
 
 package com.mayurrokade.chatapp.eventservice;
 
-public interface EventApi {
+import com.mayurrokade.chatapp.data.ChatMessage;
 
+import java.net.URISyntaxException;
+
+public interface EventService {
+
+    void sendMessage(ChatMessage chatMessage);
+
+    void connect(String username) throws URISyntaxException;
+
+    void disconnect();
 }
