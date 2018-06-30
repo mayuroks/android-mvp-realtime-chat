@@ -26,4 +26,28 @@ import com.mayurrokade.chatapp.data.source.DataSource;
 
 public class RemoteDataSource implements DataSource {
 
+    @Override
+    public void onConnect(Object... args) {
+
+    }
+
+    @Override
+    public void onDisconnect(Object... args) {
+
+    }
+
+    @Override
+    public void onConnectError(Object... args) {
+
+    }
+
+    @Override
+    public void onConnectTimeout(Object... args) {
+
+    }
+
+    @Override
+    public void onNewMessage(Object... args) {
+
+    }
 }

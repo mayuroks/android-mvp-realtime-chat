@@ -24,4 +24,28 @@ package com.mayurrokade.chatapp.data.source;
 
 public class Repository implements DataSource {
 
+    @Override
+    public void onConnect(Object... args) {
+
+    }
+
+    @Override
+    public void onDisconnect(Object... args) {
+
+    }
+
+    @Override
+    public void onConnectError(Object... args) {
+
+    }
+
+    @Override
+    public void onConnectTimeout(Object... args) {
+
+    }
+
+    @Override
+    public void onNewMessage(Object... args) {
+
+    }
 }

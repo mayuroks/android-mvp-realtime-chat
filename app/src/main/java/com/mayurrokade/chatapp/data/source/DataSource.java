@@ -22,6 +22,8 @@
 
 package com.mayurrokade.chatapp.data.source;
 
-public interface DataSource {
+import com.mayurrokade.chatapp.eventservice.EventListener;
+
+public interface DataSource extends EventListener {
 
 }
