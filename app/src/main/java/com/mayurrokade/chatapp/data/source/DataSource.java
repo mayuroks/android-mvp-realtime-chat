@@ -26,4 +26,5 @@ import com.mayurrokade.chatapp.eventservice.EventListener;
 
 public interface DataSource extends EventListener {
 
+    void setEventListener(EventListener eventListener);
 }

@@ -1,6 +1,11 @@
 # android-mvp-realtime-chat
 Android MVP Realtime Chat using RxJava and Socket.io
 
+# CASES
+- Repo even if the listener is null should receive events
+- App should not receive events in background
+- LifecyclerOwner
+
 # TODO
 - Implement ChatPresenter
 - Wire View and ChatPresenter

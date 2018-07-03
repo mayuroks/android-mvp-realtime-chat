@@ -22,7 +22,45 @@
 
 package com.mayurrokade.chatapp.chat;
 
+import android.support.annotation.NonNull;
+
+import com.mayurrokade.chatapp.data.source.Repository;
+import com.mayurrokade.chatapp.eventservice.EventListener;
+import com.mayurrokade.chatapp.util.schedulers.BaseSchedulerProvider;
+
+import io.reactivex.disposables.CompositeDisposable;
+
 public class ChatPresenter implements ChatContract.Presenter {
+
+    @NonNull
+    private final BaseSchedulerProvider mSchedulerProvider;
+
+    @NonNull
+    private final CompositeDisposable mCompositeDisposable;
+
+    @NonNull
+    private final Repository mRepository;
+
+    @NonNull
+    private final ChatContract.View mView;
+
+    @NonNull
+    private final EventListener mEventListener;
+
+    public ChatPresenter(@NonNull ChatContract.View view,
+                         @NonNull EventListener eventListener,
+                         @NonNull BaseSchedulerProvider schedulerProvider,
+                         @NonNull Repository repository) {
+        mView = view;
+        mEventListener = eventListener;
+        mRepository = repository;
+        repository.setEventListener(mEventListener);
+        mSchedulerProvider = schedulerProvider;
+        mCompositeDisposable = new CompositeDisposable();
+        mView.setPresenter(this);
+        mView.initView();
+    }
+
     @Override
     public void subscriber() {
 

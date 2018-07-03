@@ -22,30 +22,60 @@
 
 package com.mayurrokade.chatapp.data.source;
 
+import android.support.annotation.NonNull;
+
+import com.mayurrokade.chatapp.eventservice.EventListener;
+
 public class Repository implements DataSource {
+
+    private static Repository INSTANCE = null;
+    private final DataSource mRemoteDataSource;
+    private final DataSource mLocaldDataSource;
+    private EventListener mPresenterEventListener;
+
+    private Repository(@NonNull DataSource remoteDataSource,
+                       @NonNull DataSource localDataSource) {
+        mLocaldDataSource = localDataSource;
+        mRemoteDataSource = remoteDataSource;
+        mRemoteDataSource.setEventListener(this);
+    }
+
+    public static Repository getInstance(@NonNull DataSource remoteDataSource,
+                                         @NonNull DataSource localDataSource) {
+        if (INSTANCE == null) {
+            INSTANCE = new Repository(remoteDataSource, localDataSource);
+        }
+
+        return INSTANCE;
+    }
 
     @Override
     public void onConnect(Object... args) {
-
+        if (mPresenterEventListener != null) mPresenterEventListener.onConnect(args);
     }
 
     @Override
     public void onDisconnect(Object... args) {
-
+        if (mPresenterEventListener != null) mPresenterEventListener.onDisconnect(args);
     }
 
     @Override
     public void onConnectError(Object... args) {
-
+        if (mPresenterEventListener != null) mPresenterEventListener.onConnectError(args);
     }
 
     @Override
     public void onConnectTimeout(Object... args) {
-
+        if (mPresenterEventListener != null) mPresenterEventListener.onConnectTimeout(args);
     }
 
     @Override
     public void onNewMessage(Object... args) {
+        if (mPresenterEventListener != null) mPresenterEventListener.onNewMessage(args);
+    }
 
+    @Override
+    public void setEventListener(EventListener eventListener) {
+        mPresenterEventListener = eventListener;
     }
 }

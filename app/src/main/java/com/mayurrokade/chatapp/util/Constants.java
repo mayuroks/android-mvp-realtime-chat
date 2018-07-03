@@ -20,19 +20,9 @@
  * IN THE SOFTWARE.
  */
 
-package com.mayurrokade.chatapp.chat;
+package com.mayurrokade.chatapp.util;
 
-import com.mayurrokade.chatapp.BasePresenter;
-import com.mayurrokade.chatapp.BaseView;
+public class Constants {
 
-public interface ChatContract {
-
-    interface View extends BaseView<Presenter> {
-
-    }
-
-    interface Presenter extends BasePresenter {
-
-
-    }
+    public static final String USER_NAME = "SoUser";
 }

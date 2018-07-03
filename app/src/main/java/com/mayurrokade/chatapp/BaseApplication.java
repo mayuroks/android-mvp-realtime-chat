@@ -20,19 +20,25 @@
  * IN THE SOFTWARE.
  */
 
-package com.mayurrokade.chatapp.chat;
+package com.mayurrokade.chatapp;
 
-import com.mayurrokade.chatapp.BasePresenter;
-import com.mayurrokade.chatapp.BaseView;
+import android.app.Application;
+import android.arch.lifecycle.ProcessLifecycleOwner;
 
-public interface ChatContract {
+import com.mayurrokade.chatapp.util.AppLifeCycleObserver;
 
-    interface View extends BaseView<Presenter> {
+public class BaseApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-    }
+        // Init lifeCycleObserver using application context
+        AppLifeCycleObserver lifeCycleObserver
+                = new AppLifeCycleObserver(getApplicationContext());
 
-    interface Presenter extends BasePresenter {
-
-
+        // Add life cycle observer to ProcessLifecycleOwner
+        ProcessLifecycleOwner.get()
+                .getLifecycle()
+                .addObserver(lifeCycleObserver);
     }
 }

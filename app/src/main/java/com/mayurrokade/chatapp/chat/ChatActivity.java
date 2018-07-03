@@ -36,17 +36,14 @@ import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.eventservice.EventService;
-import com.mayurrokade.chatapp.eventservice.EventServiceImpl;
+import com.mayurrokade.chatapp.util.Constants;
+import com.mayurrokade.chatapp.util.Injection;
 import com.mayurrokade.chatapp.util.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-
-/*
-* */
 
 public class ChatActivity
         extends AppCompatActivity
@@ -58,45 +55,55 @@ public class ChatActivity
     private ChatAdapter mChatAdapter;
     private EditText etSendMessage;
     private Button btnSendMessage;
-    private EventService mEventService;
+//    private EventService mEventService;
+    private ChatContract.Presenter mPresenter;
 
     // TODO show popup to set username
-    private String mUsername = "SoUser";
+    private String mUsername = Constants.USER_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        rvChatMessages = findViewById(R.id.rvChatMessages);
-        etSendMessage = findViewById(R.id.etSendMessage);
-        btnSendMessage = findViewById(R.id.btnSendMessage);
-        mEventService = EventServiceImpl.getInstance();
+//        rvChatMessages = findViewById(R.id.rvChatMessages);
+//        etSendMessage = findViewById(R.id.etSendMessage);
+//        btnSendMessage = findViewById(R.id.btnSendMessage);
+////        mEventService = EventServiceImpl.getInstance();
+//
+//        setupChatMessages();
+//        setupSendButton();
 
-        setupChatMessages();
-        setupSendButton();
+//        try {
+//            mEventService.connect(mUsername);
+//            mEventService.setEventListener(this);
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            mEventService.connect(mUsername);
-            mEventService.setEventListener(this);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        new ChatPresenter(this, this,
+                Injection.provideSchedulerProvider(),
+                Injection.providesRepository(this));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mEventService.disconnect();
+        // TODO implement this
+//        mPresenter.disconnect();
     }
 
     @Override
     public void initView() {
-
+        rvChatMessages = findViewById(R.id.rvChatMessages);
+        etSendMessage = findViewById(R.id.etSendMessage);
+        btnSendMessage = findViewById(R.id.btnSendMessage);
+        setupChatMessages();
+        setupSendButton();
     }
 
     @Override
     public void setPresenter(ChatContract.Presenter presenter) {
-
+        mPresenter = presenter;
     }
 
     @Override
@@ -145,7 +152,8 @@ public class ChatActivity
         if (TextUtils.isValidString(message)) {
             Log.i(TAG, "sendMessage: ");
             ChatMessage chatMessage = new ChatMessage(mUsername, message);
-            mEventService.sendMessage(chatMessage);
+            // TODO implement this
+//            mPresenter.sendMessage(chatMessage);
             addMessage(chatMessage);
             etSendMessage.setText("");
         }
@@ -164,7 +172,6 @@ public class ChatActivity
     @Override
     public void onDisconnect(final Object... args) {
         showMessage("Disconnected", false);
-
     }
 
     @Override

@@ -20,19 +20,23 @@
  * IN THE SOFTWARE.
  */
 
-package com.mayurrokade.chatapp.chat;
+package com.mayurrokade.chatapp.util;
 
-import com.mayurrokade.chatapp.BasePresenter;
-import com.mayurrokade.chatapp.BaseView;
+import android.content.Context;
 
-public interface ChatContract {
+import com.mayurrokade.chatapp.data.source.Repository;
+import com.mayurrokade.chatapp.data.source.local.LocalDataSource;
+import com.mayurrokade.chatapp.data.source.remote.RemoteDataSource;
+import com.mayurrokade.chatapp.util.schedulers.BaseSchedulerProvider;
+import com.mayurrokade.chatapp.util.schedulers.SchedulerProvider;
 
-    interface View extends BaseView<Presenter> {
-
+public class Injection {
+    public static Repository providesRepository(Context context) {
+        return Repository.getInstance(RemoteDataSource.getInstance(),
+                LocalDataSource.getInstance());
     }
 
-    interface Presenter extends BasePresenter {
-
-
+    public static BaseSchedulerProvider provideSchedulerProvider() {
+        return SchedulerProvider.getInstance();
     }
 }

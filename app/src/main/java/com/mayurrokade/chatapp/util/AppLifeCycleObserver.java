@@ -20,19 +20,44 @@
  * IN THE SOFTWARE.
  */
 
-package com.mayurrokade.chatapp.chat;
+package com.mayurrokade.chatapp.util;
 
-import com.mayurrokade.chatapp.BasePresenter;
-import com.mayurrokade.chatapp.BaseView;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
+import android.content.Context;
+import android.widget.Toast;
 
-public interface ChatContract {
+import com.mayurrokade.chatapp.eventservice.EventServiceImpl;
 
-    interface View extends BaseView<Presenter> {
+import java.net.URISyntaxException;
 
+public class AppLifeCycleObserver implements LifecycleObserver {
+
+    private Context mContext;
+
+    public AppLifeCycleObserver(Context context) {
+        mContext = context;
     }
 
-    interface Presenter extends BasePresenter {
+    /**
+     * When app enters foreground
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    public void onEnterForeground() {
+        try {
+            EventServiceImpl.getInstance().connect(Constants.USER_NAME);
+        } catch (URISyntaxException e) {
+            Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
 
-
+    /**
+     * When app enters background
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    public void onEnterBackground() {
+        EventServiceImpl.getInstance().disconnect();
     }
 }

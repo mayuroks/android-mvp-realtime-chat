@@ -23,8 +23,19 @@
 package com.mayurrokade.chatapp.data.source.local;
 
 import com.mayurrokade.chatapp.data.source.DataSource;
+import com.mayurrokade.chatapp.eventservice.EventListener;
 
 public class LocalDataSource implements DataSource {
+
+    private static LocalDataSource INSTANCE;
+
+    public static LocalDataSource getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LocalDataSource();
+        }
+
+        return INSTANCE;
+    }
 
     @Override
     public void onConnect(Object... args) {
@@ -48,6 +59,11 @@ public class LocalDataSource implements DataSource {
 
     @Override
     public void onNewMessage(Object... args) {
+
+    }
+
+    @Override
+    public void setEventListener(EventListener eventListener) {
 
     }
 }

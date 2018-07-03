@@ -23,31 +23,55 @@
 package com.mayurrokade.chatapp.data.source.remote;
 
 import com.mayurrokade.chatapp.data.source.DataSource;
+import com.mayurrokade.chatapp.eventservice.EventListener;
+import com.mayurrokade.chatapp.eventservice.EventService;
+import com.mayurrokade.chatapp.eventservice.EventServiceImpl;
 
 public class RemoteDataSource implements DataSource {
 
+    private static RemoteDataSource INSTANCE;
+    private static EventService mEventService = EventServiceImpl.getInstance();
+    private EventListener mRepoEventListener;
+
+    private RemoteDataSource() {
+        mEventService.setEventListener(this);
+    }
+
+    public static RemoteDataSource getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new RemoteDataSource();
+        }
+
+        return INSTANCE;
+    }
+
     @Override
     public void onConnect(Object... args) {
-
+        if (mRepoEventListener != null) mRepoEventListener.onConnect(args);
     }
 
     @Override
     public void onDisconnect(Object... args) {
-
+        if (mRepoEventListener != null) mRepoEventListener.onDisconnect(args);
     }
 
     @Override
     public void onConnectError(Object... args) {
-
+        if (mRepoEventListener != null) mRepoEventListener.onConnectError(args);
     }
 
     @Override
     public void onConnectTimeout(Object... args) {
-
+        if (mRepoEventListener != null) mRepoEventListener.onConnectTimeout(args);
     }
 
     @Override
     public void onNewMessage(Object... args) {
+        if (mRepoEventListener != null) mRepoEventListener.onNewMessage(args);
+    }
 
+    @Override
+    public void setEventListener(EventListener eventListener) {
+        mRepoEventListener = eventListener;
     }
 }
