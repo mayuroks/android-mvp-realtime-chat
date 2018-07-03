@@ -24,6 +24,7 @@ package com.mayurrokade.chatapp.chat;
 
 import android.support.annotation.NonNull;
 
+import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.data.source.Repository;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.util.schedulers.BaseSchedulerProvider;
@@ -69,5 +70,10 @@ public class ChatPresenter implements ChatContract.Presenter {
     @Override
     public void unsubscribe() {
 
+    }
+
+    @Override
+    public void sendMessage(ChatMessage chatMessage) {
+        mRepository.sendMessage(chatMessage);
     }
 }

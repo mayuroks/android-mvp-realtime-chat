@@ -55,7 +55,6 @@ public class ChatActivity
     private ChatAdapter mChatAdapter;
     private EditText etSendMessage;
     private Button btnSendMessage;
-//    private EventService mEventService;
     private ChatContract.Presenter mPresenter;
 
     // TODO show popup to set username
@@ -65,20 +64,6 @@ public class ChatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-//        rvChatMessages = findViewById(R.id.rvChatMessages);
-//        etSendMessage = findViewById(R.id.etSendMessage);
-//        btnSendMessage = findViewById(R.id.btnSendMessage);
-////        mEventService = EventServiceImpl.getInstance();
-//
-//        setupChatMessages();
-//        setupSendButton();
-
-//        try {
-//            mEventService.connect(mUsername);
-//            mEventService.setEventListener(this);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
 
         new ChatPresenter(this, this,
                 Injection.provideSchedulerProvider(),
@@ -88,8 +73,6 @@ public class ChatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        // TODO implement this
-//        mPresenter.disconnect();
     }
 
     @Override
@@ -152,8 +135,7 @@ public class ChatActivity
         if (TextUtils.isValidString(message)) {
             Log.i(TAG, "sendMessage: ");
             ChatMessage chatMessage = new ChatMessage(mUsername, message);
-            // TODO implement this
-//            mPresenter.sendMessage(chatMessage);
+            mPresenter.sendMessage(chatMessage);
             addMessage(chatMessage);
             etSendMessage.setText("");
         }

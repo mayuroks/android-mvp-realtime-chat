@@ -24,6 +24,7 @@ package com.mayurrokade.chatapp.data.source;
 
 import android.support.annotation.NonNull;
 
+import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 
 public class Repository implements DataSource {
@@ -77,5 +78,10 @@ public class Repository implements DataSource {
     @Override
     public void setEventListener(EventListener eventListener) {
         mPresenterEventListener = eventListener;
+    }
+
+    @Override
+    public void sendMessage(ChatMessage chatMessage) {
+        mRemoteDataSource.sendMessage(chatMessage);
     }
 }

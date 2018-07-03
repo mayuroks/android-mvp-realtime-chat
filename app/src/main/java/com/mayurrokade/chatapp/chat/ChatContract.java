@@ -24,6 +24,7 @@ package com.mayurrokade.chatapp.chat;
 
 import com.mayurrokade.chatapp.BasePresenter;
 import com.mayurrokade.chatapp.BaseView;
+import com.mayurrokade.chatapp.data.ChatMessage;
 
 public interface ChatContract {
 
@@ -33,6 +34,6 @@ public interface ChatContract {
 
     interface Presenter extends BasePresenter {
 
-
+        void sendMessage(ChatMessage chatMessage);
     }
 }

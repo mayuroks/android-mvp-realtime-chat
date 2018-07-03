@@ -22,6 +22,7 @@
 
 package com.mayurrokade.chatapp.data.source.remote;
 
+import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.data.source.DataSource;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.eventservice.EventService;
@@ -73,5 +74,10 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void setEventListener(EventListener eventListener) {
         mRepoEventListener = eventListener;
+    }
+
+    @Override
+    public void sendMessage(ChatMessage chatMessage) {
+        mEventService.sendMessage(chatMessage);
     }
 }

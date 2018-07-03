@@ -22,6 +22,7 @@
 
 package com.mayurrokade.chatapp.data.source.local;
 
+import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.data.source.DataSource;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 
@@ -64,6 +65,11 @@ public class LocalDataSource implements DataSource {
 
     @Override
     public void setEventListener(EventListener eventListener) {
+
+    }
+
+    @Override
+    public void sendMessage(ChatMessage chatMessage) {
 
     }
 }
