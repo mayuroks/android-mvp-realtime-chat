@@ -80,7 +80,12 @@ public class ChatActivity
         rvChatMessages = findViewById(R.id.rvChatMessages);
         etSendMessage = findViewById(R.id.etSendMessage);
         ivSendMessage = findViewById(R.id.btnSendMessage);
-        getSupportActionBar().setTitle("Chat App");
+
+        if (TextUtils.isValidString(mUsername)) {
+            String title = "Chatting as " + mUsername;
+            getSupportActionBar().setTitle(title);
+        }
+
         setupChatMessages();
         setupSendButton();
     }
@@ -135,7 +140,8 @@ public class ChatActivity
 
         if (TextUtils.isValidString(message)) {
             Log.i(TAG, "sendMessage: ");
-            ChatMessage chatMessage = new ChatMessage(mUsername, message);
+            ChatMessage chatMessage = new ChatMessage(
+                    mUsername, message, ChatMessage.TYPE_MESSAGE_SENT);
             mPresenter.sendMessage(chatMessage);
             addMessage(chatMessage);
             etSendMessage.setText("");
@@ -179,7 +185,8 @@ public class ChatActivity
                 try {
                     username = data.getString("username");
                     message = data.getString("message");
-                    ChatMessage chatMessage = new ChatMessage(username, message);
+                    ChatMessage chatMessage = new ChatMessage(
+                            username, message, ChatMessage.TYPE_MESSAGE_RECEIVED);
                     addMessage(chatMessage);
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());

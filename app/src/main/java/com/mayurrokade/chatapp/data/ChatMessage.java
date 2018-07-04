@@ -23,13 +23,17 @@
 package com.mayurrokade.chatapp.data;
 
 public class ChatMessage {
+    public static final int TYPE_MESSAGE_SENT = 393;
+    public static final int TYPE_MESSAGE_RECEIVED = 529;
 
-    String username;
-    String message;
+    private String username;
+    private String message;
+    private int type;
 
-    public ChatMessage(String username, String message) {
+    public ChatMessage(String username, String message, int type) {
         this.username = username;
         this.message = message;
+        this.type = type;
     }
 
     public String getUsername() {
@@ -46,5 +50,13 @@ public class ChatMessage {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

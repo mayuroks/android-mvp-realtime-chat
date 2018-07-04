@@ -35,7 +35,7 @@ import com.mayurrokade.chatapp.data.ChatMessage;
 
 import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ChatMessage> mItems;
     private Context mContext;
@@ -47,19 +47,34 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder;
-        View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_received_message, null, false);
-        viewHolder = new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder;
+        View view;
+
+        if (viewType == ChatMessage.TYPE_MESSAGE_RECEIVED) {
+            view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_message_received, parent, false);
+            viewHolder = new ReceivedMessageViewHolder(view);
+        } else {
+            view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_message_sent, parent, false);
+            viewHolder = new SentMessageViewHolder(view);
+        }
+
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ChatMessage chatMessage = mItems.get(position);
-        holder.tvUsername.setText(chatMessage.getUsername());
-        holder.tvMessage.setText(chatMessage.getMessage());
+
+        if (chatMessage.getType() == ChatMessage.TYPE_MESSAGE_RECEIVED) {
+            ((ReceivedMessageViewHolder) holder).tvUsername.setText(chatMessage.getUsername());
+            ((ReceivedMessageViewHolder) holder).tvMessage.setText(chatMessage.getMessage());
+        } else {
+            ((SentMessageViewHolder) holder).tvUsername.setText(chatMessage.getUsername());
+            ((SentMessageViewHolder) holder).tvMessage.setText(chatMessage.getMessage());
+        }
     }
 
     @Override
@@ -67,15 +82,30 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         return mItems.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return mItems.get(position).getType();
+    }
+
     public void addNewMessage(@NonNull ChatMessage chatMessage) {
         mItems.add(chatMessage);
         notifyItemInserted(mItems.size() - 1);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
         TextView tvUsername, tvMessage;
 
-        public ViewHolder(View itemView) {
+        public ReceivedMessageViewHolder(View itemView) {
+            super(itemView);
+            tvUsername = itemView.findViewById(R.id.tvUsername);
+            tvMessage = itemView.findViewById(R.id.tvMessage);
+        }
+    }
+
+    static class SentMessageViewHolder extends RecyclerView.ViewHolder {
+        TextView tvUsername, tvMessage;
+
+        public SentMessageViewHolder(View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvMessage = itemView.findViewById(R.id.tvMessage);
