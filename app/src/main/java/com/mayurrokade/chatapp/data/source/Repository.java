@@ -27,6 +27,8 @@ import android.support.annotation.NonNull;
 import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 
+import io.reactivex.Flowable;
+
 public class Repository implements DataSource {
 
     private static Repository INSTANCE = null;
@@ -52,27 +54,32 @@ public class Repository implements DataSource {
 
     @Override
     public void onConnect(Object... args) {
-        if (mPresenterEventListener != null) mPresenterEventListener.onConnect(args);
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onConnect(args);
     }
 
     @Override
     public void onDisconnect(Object... args) {
-        if (mPresenterEventListener != null) mPresenterEventListener.onDisconnect(args);
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onDisconnect(args);
     }
 
     @Override
     public void onConnectError(Object... args) {
-        if (mPresenterEventListener != null) mPresenterEventListener.onConnectError(args);
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onConnectError(args);
     }
 
     @Override
     public void onConnectTimeout(Object... args) {
-        if (mPresenterEventListener != null) mPresenterEventListener.onConnectTimeout(args);
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onConnectTimeout(args);
     }
 
     @Override
     public void onNewMessage(Object... args) {
-        if (mPresenterEventListener != null) mPresenterEventListener.onNewMessage(args);
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onNewMessage(args);
     }
 
     @Override
@@ -81,7 +88,7 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public void sendMessage(ChatMessage chatMessage) {
-        mRemoteDataSource.sendMessage(chatMessage);
+    public Flowable<ChatMessage> sendMessage(ChatMessage chatMessage) {
+        return mRemoteDataSource.sendMessage(chatMessage);
     }
 }

@@ -25,9 +25,11 @@ package com.mayurrokade.chatapp.data.source;
 import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 
+import io.reactivex.Flowable;
+
 public interface DataSource extends EventListener {
 
     void setEventListener(EventListener eventListener);
 
-    void sendMessage(ChatMessage chatMessage);
+    Flowable<ChatMessage> sendMessage(ChatMessage chatMessage);
 }

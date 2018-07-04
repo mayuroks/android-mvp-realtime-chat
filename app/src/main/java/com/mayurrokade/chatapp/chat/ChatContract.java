@@ -30,6 +30,7 @@ public interface ChatContract {
 
     interface View extends BaseView<Presenter> {
 
+        void onMessageDelivered(ChatMessage chatMessage);
     }
 
     interface Presenter extends BasePresenter {

@@ -26,6 +26,8 @@ import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.data.source.DataSource;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 
+import io.reactivex.Flowable;
+
 public class LocalDataSource implements DataSource {
 
     private static LocalDataSource INSTANCE;
@@ -69,7 +71,7 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public void sendMessage(ChatMessage chatMessage) {
-
+    public Flowable<ChatMessage> sendMessage(ChatMessage chatMessage) {
+        return null;
     }
 }

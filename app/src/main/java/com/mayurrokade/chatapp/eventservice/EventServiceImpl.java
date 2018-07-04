@@ -36,6 +36,10 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
 
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -61,9 +65,32 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void sendMessage(@NonNull ChatMessage chatMessage) {
-        Log.i(TAG, "sendMessage: " + chatMessage.getMessage());
-        mSocket.emit("new message", chatMessage.getMessage());
+    public Flowable<ChatMessage> sendMessage(@NonNull final ChatMessage chatMessage) {
+        return Flowable.create(new FlowableOnSubscribe<ChatMessage>() {
+            @Override
+            public void subscribe(FlowableEmitter<ChatMessage> emitter) throws Exception {
+                /*
+                * Socket.io supports acking messages.
+                * This feature can be used as
+                * mSocket.emit("new message", chatMessage.getMessage(), new Ack() {
+                *   @Override
+                *   public void call(Object... args) {
+                *       // Do something with args
+                *
+                *       // On success
+                *       emitter.onNext(chatMessage);
+                *
+                *       // On error
+                *       emitter.onError(new Exception("Sending message failed."));
+                *    }
+                * });
+                *
+                * */
+
+                mSocket.emit("new message", chatMessage.getMessage());
+                emitter.onNext(chatMessage);
+            }
+        }, BackpressureStrategy.BUFFER);
     }
 
     @Override

@@ -30,6 +30,8 @@ import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.util.schedulers.BaseSchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class ChatPresenter implements ChatContract.Presenter {
 
@@ -69,11 +71,27 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void unsubscribe() {
-
+        mCompositeDisposable.clear();
     }
 
     @Override
     public void sendMessage(ChatMessage chatMessage) {
-        mRepository.sendMessage(chatMessage);
+        Disposable disposable =
+                mRepository.sendMessage(chatMessage)
+                        .subscribeOn(mSchedulerProvider.io())
+                        .observeOn(mSchedulerProvider.ui())
+                        .subscribe(new Consumer<ChatMessage>() {
+                            @Override
+                            public void accept(ChatMessage chatMessage) throws Exception {
+                                mView.onMessageDelivered(chatMessage);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                mView.showMessage(throwable.getMessage(), true);
+                            }
+                        });
+
+        mCompositeDisposable.add(disposable);
     }
 }

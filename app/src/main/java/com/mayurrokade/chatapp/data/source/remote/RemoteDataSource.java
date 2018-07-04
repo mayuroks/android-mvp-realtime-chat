@@ -28,6 +28,8 @@ import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.eventservice.EventService;
 import com.mayurrokade.chatapp.eventservice.EventServiceImpl;
 
+import io.reactivex.Flowable;
+
 public class RemoteDataSource implements DataSource {
 
     private static RemoteDataSource INSTANCE;
@@ -48,27 +50,32 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void onConnect(Object... args) {
-        if (mRepoEventListener != null) mRepoEventListener.onConnect(args);
+        if (mRepoEventListener != null)
+            mRepoEventListener.onConnect(args);
     }
 
     @Override
     public void onDisconnect(Object... args) {
-        if (mRepoEventListener != null) mRepoEventListener.onDisconnect(args);
+        if (mRepoEventListener != null)
+            mRepoEventListener.onDisconnect(args);
     }
 
     @Override
     public void onConnectError(Object... args) {
-        if (mRepoEventListener != null) mRepoEventListener.onConnectError(args);
+        if (mRepoEventListener != null)
+            mRepoEventListener.onConnectError(args);
     }
 
     @Override
     public void onConnectTimeout(Object... args) {
-        if (mRepoEventListener != null) mRepoEventListener.onConnectTimeout(args);
+        if (mRepoEventListener != null)
+            mRepoEventListener.onConnectTimeout(args);
     }
 
     @Override
     public void onNewMessage(Object... args) {
-        if (mRepoEventListener != null) mRepoEventListener.onNewMessage(args);
+        if (mRepoEventListener != null)
+            mRepoEventListener.onNewMessage(args);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void sendMessage(ChatMessage chatMessage) {
-        mEventService.sendMessage(chatMessage);
+    public Flowable<ChatMessage> sendMessage(ChatMessage chatMessage) {
+        return mEventService.sendMessage(chatMessage);
     }
 }

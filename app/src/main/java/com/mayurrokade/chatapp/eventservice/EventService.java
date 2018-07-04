@@ -26,6 +26,8 @@ import com.mayurrokade.chatapp.data.ChatMessage;
 
 import java.net.URISyntaxException;
 
+import io.reactivex.Flowable;
+
 public interface EventService {
 
     void connect(String username) throws URISyntaxException;
@@ -34,5 +36,5 @@ public interface EventService {
 
     void setEventListener(EventListener listener);
 
-    void sendMessage(ChatMessage chatMessage);
+    Flowable<ChatMessage> sendMessage(ChatMessage chatMessage);
 }

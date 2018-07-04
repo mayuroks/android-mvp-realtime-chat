@@ -73,6 +73,7 @@ public class ChatActivity
     @Override
     protected void onPause() {
         super.onPause();
+        mPresenter.unsubscribe();
     }
 
     @Override
@@ -186,5 +187,10 @@ public class ChatActivity
                 }
             }
         });
+    }
+
+    @Override
+    public void onMessageDelivered(ChatMessage chatMessage) {
+        // Update UI to show the message has been delivered
     }
 }
