@@ -28,14 +28,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
-import com.mayurrokade.chatapp.eventservice.EventService;
 import com.mayurrokade.chatapp.util.Constants;
 import com.mayurrokade.chatapp.util.Injection;
 import com.mayurrokade.chatapp.util.TextUtils;
@@ -54,7 +53,7 @@ public class ChatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private ChatAdapter mChatAdapter;
     private EditText etSendMessage;
-    private Button btnSendMessage;
+    private ImageView ivSendMessage;
     private ChatContract.Presenter mPresenter;
 
     // TODO show popup to set username
@@ -80,7 +79,8 @@ public class ChatActivity
     public void initView() {
         rvChatMessages = findViewById(R.id.rvChatMessages);
         etSendMessage = findViewById(R.id.etSendMessage);
-        btnSendMessage = findViewById(R.id.btnSendMessage);
+        ivSendMessage = findViewById(R.id.btnSendMessage);
+        getSupportActionBar().setTitle("Chat App");
         setupChatMessages();
         setupSendButton();
     }
@@ -121,7 +121,7 @@ public class ChatActivity
     }
 
     private void setupSendButton() {
-        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+        ivSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick: sendMessage");
