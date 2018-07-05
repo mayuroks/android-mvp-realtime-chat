@@ -109,4 +109,14 @@ public class ChatPresenter implements ChatContract.Presenter {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void onTyping() {
+        mRepository.onTyping();
+    }
+
+    @Override
+    public void onStopTyping() {
+        mRepository.onStopTyping();
+    }
 }

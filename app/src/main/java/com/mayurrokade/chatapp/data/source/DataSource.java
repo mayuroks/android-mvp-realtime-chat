@@ -33,9 +33,13 @@ public interface DataSource extends EventListener {
 
     void setEventListener(EventListener eventListener);
 
-    Flowable<ChatMessage> sendMessage(ChatMessage chatMessage);
-
     void connect(String username) throws URISyntaxException;
 
     void disconnect();
+
+    Flowable<ChatMessage> sendMessage(ChatMessage chatMessage);
+
+    void onTyping();
+
+    void onStopTyping();
 }

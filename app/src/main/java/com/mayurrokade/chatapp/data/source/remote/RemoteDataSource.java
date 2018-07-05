@@ -115,6 +115,16 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
+    public void onTyping() {
+        mEventService.onTyping();
+    }
+
+    @Override
+    public void onStopTyping() {
+        mEventService.onStopTyping();
+    }
+
+    @Override
     public void connect(String username) throws URISyntaxException {
         mEventService.connect(username);
     }

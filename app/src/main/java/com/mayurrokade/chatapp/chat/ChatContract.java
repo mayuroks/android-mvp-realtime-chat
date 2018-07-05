@@ -40,5 +40,9 @@ public interface ChatContract {
         void sendMessage(ChatMessage chatMessage);
 
         void changeUsername(String username);
+
+        void onTyping();
+
+        void onStopTyping();
     }
 }

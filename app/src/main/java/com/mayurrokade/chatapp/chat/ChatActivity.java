@@ -24,10 +24,13 @@ package com.mayurrokade.chatapp.chat;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,12 +58,15 @@ public class ChatActivity
         implements ChatContract.View, EventListener {
 
     private static final String TAG = ChatActivity.class.getSimpleName();
+    private static final long TYPING_TIMER_LENGTH = 3000;
     private RecyclerView rvChatMessages;
     private RecyclerView.LayoutManager mLayoutManager;
     private ChatAdapter mChatAdapter;
     private EditText etSendMessage;
     private ImageView ivSendMessage;
     private ChatContract.Presenter mPresenter;
+    private boolean mTyping = false;
+    private Handler mTypingHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +119,7 @@ public class ChatActivity
         askUsername();
         setupChatMessages();
         setupSendButton();
+        setupTextWatcher();
     }
 
     @Override
@@ -216,6 +223,31 @@ public class ChatActivity
         showMessage("Info clicked", false);
     }
 
+    private void setupTextWatcher() {
+        etSendMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!mTyping) {
+                    mTyping = true;
+                    mPresenter.onTyping();
+                }
+
+                mTypingHandler.removeCallbacks(onTypingTimeout);
+                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
     @Override
     public void onConnect(final Object... args) {
     }
@@ -299,6 +331,7 @@ public class ChatActivity
             return;
         }
 
+        addTyping(username);
         Log.i(TAG, "onTyping: " + username);
     }
 
@@ -312,7 +345,7 @@ public class ChatActivity
             Log.e(TAG, e.getMessage());
             return;
         }
-
+        removeTyping(username);
         Log.i(TAG, "onStopTyping: " + username);
     }
 
@@ -324,5 +357,23 @@ public class ChatActivity
     @Override
     public void updateUsername(String username) {
         User.setUsername(username);
+    }
+
+    private Runnable onTypingTimeout = new Runnable() {
+        @Override
+        public void run() {
+            if (!mTyping) return;
+
+            mTyping = false;
+            mPresenter.onStopTyping();
+        }
+    };
+
+    private void removeTyping(String username) {
+
+    }
+
+    private void addTyping(String username) {
+
     }
 }

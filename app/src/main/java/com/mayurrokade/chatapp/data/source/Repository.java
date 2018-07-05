@@ -119,6 +119,16 @@ public class Repository implements DataSource {
     }
 
     @Override
+    public void onTyping() {
+        mRemoteDataSource.onTyping();
+    }
+
+    @Override
+    public void onStopTyping() {
+        mRemoteDataSource.onStopTyping();
+    }
+
+    @Override
     public void connect(String username) throws URISyntaxException {
         mRemoteDataSource.connect(username);
     }

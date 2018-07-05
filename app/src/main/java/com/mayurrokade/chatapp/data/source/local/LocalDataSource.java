@@ -98,6 +98,16 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
+    public void onTyping() {
+
+    }
+
+    @Override
+    public void onStopTyping() {
+
+    }
+
+    @Override
     public void connect(String username) throws URISyntaxException {
 
     }

@@ -37,4 +37,8 @@ public interface EventService {
     void setEventListener(EventListener listener);
 
     Flowable<ChatMessage> sendMessage(ChatMessage chatMessage);
+
+    void onTyping();
+
+    void onStopTyping();
 }
