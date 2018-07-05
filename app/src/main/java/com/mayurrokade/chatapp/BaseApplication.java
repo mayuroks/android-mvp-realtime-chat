@@ -26,11 +26,19 @@ import android.app.Application;
 import android.arch.lifecycle.ProcessLifecycleOwner;
 
 import com.mayurrokade.chatapp.util.AppLifeCycleObserver;
+import com.mayurrokade.chatapp.util.User;
+
+import java.util.UUID;
 
 public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Set random username
+        String randomPrefix = UUID.randomUUID().toString().substring(0,5);
+        String username = randomPrefix + "_User";
+        User.setUsername(username);
 
         // Init lifeCycleObserver using application context
         AppLifeCycleObserver lifeCycleObserver

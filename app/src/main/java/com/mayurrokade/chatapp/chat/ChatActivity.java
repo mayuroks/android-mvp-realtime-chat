@@ -100,8 +100,10 @@ public class ChatActivity
         ivSendMessage = findViewById(R.id.btnSendMessage);
 
         if (TextUtils.isValidString(User.getUsername())) {
-            String title = "Chatting as " + User.getUsername();
+            String title = "Realtime MVP Chat";
             getSupportActionBar().setTitle(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_logo_no_background);
         }
 
         setupChatMessages();
@@ -205,17 +207,14 @@ public class ChatActivity
 
     @Override
     public void onConnect(final Object... args) {
-        showMessage("Connected", false);
     }
 
     @Override
     public void onDisconnect(final Object... args) {
-        showMessage("Disconnected", false);
     }
 
     @Override
     public void onConnectError(final Object... args) {
-        showMessage("Connection Error", false);
     }
 
     @Override

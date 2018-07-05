@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/change_name"
+        android:title="Edit Username"
         android:icon="@drawable/ic_edit"
         android:visible="true"
         app:showAsAction="always"/>

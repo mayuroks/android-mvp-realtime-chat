@@ -9,5 +9,4 @@
         <item name="android:textColorPrimary">@color/colorTextRegular</item>
         <item name="android:textColor">@color/colorTextRegular</item>
     </style>
-
 </resources>

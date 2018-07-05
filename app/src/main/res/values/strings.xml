@@ -1,8 +1,3 @@
 <resources>
     <string name="app_name">ChatApp</string>
-    <string name="connect">Connected</string>
-    <string name="disconnect">Disconnected</string>
-    <string name="error_connect">Error Connecting</string>
-    <string name="message_user_joined">User Joined</string>
-    <string name="message_user_left">User Left</string>
 </resources>

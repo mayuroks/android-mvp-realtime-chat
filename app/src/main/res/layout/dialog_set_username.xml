@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Enter your username"
+        android:text="Set Your Username"
         android:textSize="20sp" />
 
     <EditText
@@ -20,8 +20,9 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Set username"
+        android:hint="Type here"
         android:inputType="textEmailAddress"
+        android:paddingLeft="0dp"
         android:textColor="@color/colorTextRegular"
         android:textColorHint="@color/colorTextFaded" />
 
