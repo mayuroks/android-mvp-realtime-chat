@@ -30,6 +30,8 @@ public interface BaseView<T> {
 
     void showMessage(String message, boolean isError);
 
+    void hideMessage();
+
     void showProgress();
 
     void hideProgress();

@@ -7,13 +7,54 @@
     android:background="@color/colorBackground"
     tools:context=".chat.ChatActivity">
 
+    <TextView
+        android:id="@+id/tvAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAlert"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/rvChatMessages"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvChatMessages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@+id/llSendMessage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvAlert" />
+
+    <LinearLayout
+        android:id="@+id/llTyping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/llSendMessage">
+
+        <TextView
+            android:id="@+id/tvTyping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:text="User is typing"
+            android:textSize="16sp" />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/colorAccent"
+            app:indicatorName="BallPulseIndicator" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llSendMessage"
@@ -48,7 +89,7 @@
                 android:background="@android:color/transparent"
                 android:hint="Type message here"
                 android:textColor="@color/colorTextRegular"
-                android:textColorHint="@color/colorTextFaded"/>
+                android:textColorHint="@color/colorTextFaded" />
         </LinearLayout>
 
         <ImageView

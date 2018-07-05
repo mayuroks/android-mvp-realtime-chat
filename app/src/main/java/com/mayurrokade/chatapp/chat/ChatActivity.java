@@ -22,7 +22,8 @@
 
 package com.mayurrokade.chatapp.chat;
 
-import android.content.Context;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -39,7 +40,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.data.ChatMessage;
@@ -59,19 +61,28 @@ public class ChatActivity
 
     private static final String TAG = ChatActivity.class.getSimpleName();
     private static final long TYPING_TIMER_LENGTH = 3000;
+    private static final long ALERT_LENGTH = 2000;
     private RecyclerView rvChatMessages;
     private RecyclerView.LayoutManager mLayoutManager;
     private ChatAdapter mChatAdapter;
     private EditText etSendMessage;
     private ImageView ivSendMessage;
+    private LinearLayout llTyping;
+    private TextView tvTyping, tvAlert;
     private ChatContract.Presenter mPresenter;
     private boolean mTyping = false;
     private Handler mTypingHandler = new Handler();
+    private int mAlerterHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         new ChatPresenter(this, this,
                 Injection.provideSchedulerProvider(),
@@ -112,9 +123,12 @@ public class ChatActivity
         rvChatMessages = findViewById(R.id.rvChatMessages);
         etSendMessage = findViewById(R.id.etSendMessage);
         ivSendMessage = findViewById(R.id.btnSendMessage);
+        tvTyping = findViewById(R.id.tvTyping);
+        llTyping = findViewById(R.id.llTyping);
+        tvAlert = findViewById(R.id.tvAlert);
+        tvAlert.setTranslationY(-100);
 
-        String title = "Realtime MVP Chat";
-        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setTitle("Realtime MVP Chat");
 
         askUsername();
         setupChatMessages();
@@ -132,12 +146,42 @@ public class ChatActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(),
-                        message,
-                        Toast.LENGTH_SHORT)
-                        .show();
+                mAlerterHeight = tvAlert.getHeight();
+                tvAlert.setTranslationY(-1 * mAlerterHeight);
+                tvAlert.setText(message);
+
+                tvAlert.animate()
+                        .translationY(0)
+                        .setDuration(500)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                final Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        hideMessage();
+                                    }
+                                }, ALERT_LENGTH);
+                            }
+                        });
             }
         });
+    }
+
+    @Override
+    public void hideMessage() {
+        tvAlert.animate()
+                .translationY(-1 * mAlerterHeight)
+                .setDuration(500)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        tvAlert.setText("");
+                    }
+                });
     }
 
     @Override
@@ -161,7 +205,6 @@ public class ChatActivity
         ivSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "onClick: sendMessage");
                 sendMessage();
             }
         });
@@ -171,7 +214,6 @@ public class ChatActivity
         String message = etSendMessage.getText().toString().trim();
 
         if (TextUtils.isValidString(message)) {
-            Log.i(TAG, "sendMessage: ");
             ChatMessage chatMessage = new ChatMessage(
                     User.getUsername(), message, ChatMessage.TYPE_MESSAGE_SENT);
             mPresenter.sendMessage(chatMessage);
@@ -186,7 +228,6 @@ public class ChatActivity
     }
 
     private void askUsername() {
-        final Context context = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(
                 R.layout.dialog_set_username, null);
@@ -346,7 +387,6 @@ public class ChatActivity
             return;
         }
         removeTyping(username);
-        Log.i(TAG, "onStopTyping: " + username);
     }
 
     @Override
@@ -369,11 +409,23 @@ public class ChatActivity
         }
     };
 
-    private void removeTyping(String username) {
-
+    private void addTyping(final String username) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvTyping.setText(username + " is typing");
+                llTyping.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
-    private void addTyping(String username) {
-
+    private void removeTyping(String username) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvTyping.setText("");
+                llTyping.setVisibility(View.GONE);
+            }
+        });
     }
 }
