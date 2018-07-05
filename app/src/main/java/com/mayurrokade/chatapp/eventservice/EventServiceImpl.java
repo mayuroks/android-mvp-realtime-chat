@@ -41,6 +41,15 @@ public class EventServiceImpl implements EventService {
 
     private static final String TAG = EventServiceImpl.class.getSimpleName();
     private static final String SOCKET_URL = "https://socket-io-chat.now.sh";
+    private static final String EVENT_CONNECT = Socket.EVENT_CONNECT;
+    private static final String EVENT_DISCONNECT = Socket.EVENT_DISCONNECT;
+    private static final String EVENT_CONNECT_ERROR = Socket.EVENT_CONNECT_ERROR;
+    private static final String EVENT_CONNECT_TIMEOUT = Socket.EVENT_CONNECT_TIMEOUT;
+    private static final String EVENT_NEW_MESSAGE = "new message";
+    private static final String EVENT_USER_JOINED = "user joined";
+    private static final String EVENT_USER_LEFT = "user left";
+    private static final String EVENT_TYPING = "typing";
+    private static final String EVENT_STOP_TYPING = "stop typing";
     private static EventService INSTANCE;
     private static EventListener mEventListener;
     private static Socket mSocket;
@@ -79,7 +88,7 @@ public class EventServiceImpl implements EventService {
                 *
                 * */
 
-                mSocket.emit("new message", chatMessage.getMessage());
+                mSocket.emit(EVENT_NEW_MESSAGE, chatMessage.getMessage());
                 emitter.onNext(chatMessage);
             }
         }, BackpressureStrategy.BUFFER);
@@ -89,11 +98,15 @@ public class EventServiceImpl implements EventService {
     public void connect(String username) throws URISyntaxException {
         mUsername = username;
         mSocket = IO.socket(SOCKET_URL);
-        mSocket.on(Socket.EVENT_CONNECT, onConnect);
-        mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.on("new message", onNewMessage);
+        mSocket.on(EVENT_CONNECT, onConnect);
+        mSocket.on(EVENT_DISCONNECT, onDisconnect);
+        mSocket.on(EVENT_CONNECT_ERROR, onConnectError);
+        mSocket.on(EVENT_CONNECT_TIMEOUT, onConnectError);
+        mSocket.on(EVENT_NEW_MESSAGE, onNewMessage);
+        mSocket.on(EVENT_USER_JOINED, onUserJoined);
+        mSocket.on(EVENT_USER_LEFT, onUserLeft);
+        mSocket.on(EVENT_TYPING, onTyping);
+        mSocket.on(EVENT_STOP_TYPING, onStopTyping);
         mSocket.connect();
     }
 
@@ -137,6 +150,38 @@ public class EventServiceImpl implements EventService {
         public void call(final Object... args) {
             Log.i(TAG, "call: onNewMessage");
             if (mEventListener != null) mEventListener.onNewMessage(args);
+        }
+    };
+
+    private Emitter.Listener onUserJoined = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            Log.i(TAG, "call: onNewMessage");
+            if (mEventListener != null) mEventListener.onUserJoined(args);
+        }
+    };
+
+    private Emitter.Listener onUserLeft = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            Log.i(TAG, "call: onNewMessage");
+            if (mEventListener != null) mEventListener.onUserLeft(args);
+        }
+    };
+
+    private Emitter.Listener onTyping = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            Log.i(TAG, "call: onNewMessage");
+            if (mEventListener != null) mEventListener.onTyping(args);
+        }
+    };
+
+    private Emitter.Listener onStopTyping = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            Log.i(TAG, "call: onNewMessage");
+            if (mEventListener != null) mEventListener.onStopTyping(args);
         }
     };
 }

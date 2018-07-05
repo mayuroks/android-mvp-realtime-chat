@@ -68,6 +68,26 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
+    public void onUserJoined(Object... args) {
+
+    }
+
+    @Override
+    public void onUserLeft(Object... args) {
+
+    }
+
+    @Override
+    public void onTyping(Object... args) {
+
+    }
+
+    @Override
+    public void onStopTyping(Object... args) {
+
+    }
+
+    @Override
     public void setEventListener(EventListener eventListener) {
 
     }

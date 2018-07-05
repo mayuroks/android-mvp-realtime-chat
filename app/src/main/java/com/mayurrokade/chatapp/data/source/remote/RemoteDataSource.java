@@ -81,6 +81,30 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
+    public void onUserJoined(Object... args) {
+        if (mRepoEventListener != null)
+            mRepoEventListener.onUserJoined(args);
+    }
+
+    @Override
+    public void onUserLeft(Object... args) {
+        if (mRepoEventListener != null)
+            mRepoEventListener.onUserLeft(args);
+    }
+
+    @Override
+    public void onTyping(Object... args) {
+        if (mRepoEventListener != null)
+            mRepoEventListener.onTyping(args);
+    }
+
+    @Override
+    public void onStopTyping(Object... args) {
+        if (mRepoEventListener != null)
+            mRepoEventListener.onStopTyping(args);
+    }
+
+    @Override
     public void setEventListener(EventListener eventListener) {
         mRepoEventListener = eventListener;
     }

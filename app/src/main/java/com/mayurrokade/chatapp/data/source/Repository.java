@@ -85,6 +85,30 @@ public class Repository implements DataSource {
     }
 
     @Override
+    public void onUserJoined(Object... args) {
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onUserJoined(args);
+    }
+
+    @Override
+    public void onUserLeft(Object... args) {
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onUserLeft(args);
+    }
+
+    @Override
+    public void onTyping(Object... args) {
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onTyping(args);
+    }
+
+    @Override
+    public void onStopTyping(Object... args) {
+        if (mPresenterEventListener != null)
+            mPresenterEventListener.onStopTyping(args);
+    }
+
+    @Override
     public void setEventListener(EventListener eventListener) {
         mPresenterEventListener = eventListener;
     }

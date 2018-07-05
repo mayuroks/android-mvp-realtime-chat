@@ -87,9 +87,17 @@ public class ChatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.change_name) {
-            askUsername();
+        switch (item.getItemId()) {
+            case R.id.change_name:
+                askUsername();
+                break;
+            case R.id.info:
+                showInfo();
+                break;
+            default:
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -202,6 +210,12 @@ public class ChatActivity
         dialog.show();
     }
 
+    private void showInfo() {
+        // TODO show info about the app
+        // About the developer
+        showMessage("Info clicked", false);
+    }
+
     @Override
     public void onConnect(final Object... args) {
     }
@@ -240,6 +254,66 @@ public class ChatActivity
                 }
             }
         });
+    }
+
+    @Override
+    public void onUserJoined(Object... args) {
+        JSONObject data = (JSONObject) args[0];
+        String username;
+        int numUsers;
+        try {
+            username = data.getString("username");
+            numUsers = data.getInt("numUsers");
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+            return;
+        }
+
+        showMessage(username + " has joined", false);
+    }
+
+    @Override
+    public void onUserLeft(Object... args) {
+        JSONObject data = (JSONObject) args[0];
+        String username;
+        int numUsers;
+        try {
+            username = data.getString("username");
+            numUsers = data.getInt("numUsers");
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+            return;
+        }
+
+        showMessage(username + " has left", false);
+    }
+
+    @Override
+    public void onTyping(Object... args) {
+        JSONObject data = (JSONObject) args[0];
+        String username;
+        try {
+            username = data.getString("username");
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+            return;
+        }
+
+        Log.i(TAG, "onTyping: " + username);
+    }
+
+    @Override
+    public void onStopTyping(Object... args) {
+        JSONObject data = (JSONObject) args[0];
+        String username;
+        try {
+            username = data.getString("username");
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+            return;
+        }
+
+        Log.i(TAG, "onStopTyping: " + username);
     }
 
     @Override
