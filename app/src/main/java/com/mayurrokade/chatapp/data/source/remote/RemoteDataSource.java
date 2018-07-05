@@ -28,6 +28,8 @@ import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.eventservice.EventService;
 import com.mayurrokade.chatapp.eventservice.EventServiceImpl;
 
+import java.net.URISyntaxException;
+
 import io.reactivex.Flowable;
 
 public class RemoteDataSource implements DataSource {
@@ -86,5 +88,15 @@ public class RemoteDataSource implements DataSource {
     @Override
     public Flowable<ChatMessage> sendMessage(ChatMessage chatMessage) {
         return mEventService.sendMessage(chatMessage);
+    }
+
+    @Override
+    public void connect(String username) throws URISyntaxException {
+        mEventService.connect(username);
+    }
+
+    @Override
+    public void disconnect() {
+        mEventService.disconnect();
     }
 }

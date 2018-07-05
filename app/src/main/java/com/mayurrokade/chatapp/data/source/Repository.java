@@ -27,6 +27,8 @@ import android.support.annotation.NonNull;
 import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 
+import java.net.URISyntaxException;
+
 import io.reactivex.Flowable;
 
 public class Repository implements DataSource {
@@ -90,5 +92,15 @@ public class Repository implements DataSource {
     @Override
     public Flowable<ChatMessage> sendMessage(ChatMessage chatMessage) {
         return mRemoteDataSource.sendMessage(chatMessage);
+    }
+
+    @Override
+    public void connect(String username) throws URISyntaxException {
+        mRemoteDataSource.connect(username);
+    }
+
+    @Override
+    public void disconnect() {
+        mRemoteDataSource.disconnect();
     }
 }

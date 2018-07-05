@@ -24,7 +24,7 @@ package com.mayurrokade.chatapp;
 
 public interface BasePresenter {
 
-    void subscriber();
+    void subscribe();
 
     void unsubscribe();
 }

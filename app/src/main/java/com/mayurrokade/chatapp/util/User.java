@@ -22,7 +22,15 @@
 
 package com.mayurrokade.chatapp.util;
 
-public class Constants {
+public class User {
 
-    public static final String USER_NAME = "SoUser";
+    private static String USER_NAME = "Some_User";
+
+    public static String getUsername() {
+        return USER_NAME;
+    }
+
+    public static void setUsername(String userName) {
+        USER_NAME = userName;
+    }
 }

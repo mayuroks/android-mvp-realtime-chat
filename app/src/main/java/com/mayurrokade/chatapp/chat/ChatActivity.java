@@ -22,12 +22,18 @@
 
 package com.mayurrokade.chatapp.chat;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,9 +41,9 @@ import android.widget.Toast;
 import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
-import com.mayurrokade.chatapp.util.Constants;
 import com.mayurrokade.chatapp.util.Injection;
 import com.mayurrokade.chatapp.util.TextUtils;
+import com.mayurrokade.chatapp.util.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,9 +62,6 @@ public class ChatActivity
     private ImageView ivSendMessage;
     private ChatContract.Presenter mPresenter;
 
-    // TODO show popup to set username
-    private String mUsername = Constants.USER_NAME;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,13 +79,28 @@ public class ChatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.change_name) {
+            showSetUsernameDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void initView() {
         rvChatMessages = findViewById(R.id.rvChatMessages);
         etSendMessage = findViewById(R.id.etSendMessage);
         ivSendMessage = findViewById(R.id.btnSendMessage);
 
-        if (TextUtils.isValidString(mUsername)) {
-            String title = "Chatting as " + mUsername;
+        if (TextUtils.isValidString(User.getUsername())) {
+            String title = "Chatting as " + User.getUsername();
             getSupportActionBar().setTitle(title);
         }
 
@@ -141,7 +159,7 @@ public class ChatActivity
         if (TextUtils.isValidString(message)) {
             Log.i(TAG, "sendMessage: ");
             ChatMessage chatMessage = new ChatMessage(
-                    mUsername, message, ChatMessage.TYPE_MESSAGE_SENT);
+                    User.getUsername(), message, ChatMessage.TYPE_MESSAGE_SENT);
             mPresenter.sendMessage(chatMessage);
             addMessage(chatMessage);
             etSendMessage.setText("");
@@ -151,6 +169,38 @@ public class ChatActivity
     private void addMessage(ChatMessage chatMessage) {
         mChatAdapter.addNewMessage(chatMessage);
         rvChatMessages.scrollToPosition(mChatAdapter.getItemCount() - 1);
+    }
+
+    private void showSetUsernameDialog() {
+        final Context context = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(
+                R.layout.dialog_set_username, null);
+        final AlertDialog dialog = builder.setView(view).create();
+
+        Button btnSave = view.findViewById(R.id.btnSave);
+        Button btnClose = view.findViewById(R.id.btnClose);
+        final EditText etUsername = view.findViewById(R.id.etUsername);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                String username = etUsername.getText().toString().trim();
+                if (TextUtils.isValidString(username)) {
+                    mPresenter.changeUsername(username);
+                }
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override
@@ -199,5 +249,11 @@ public class ChatActivity
     @Override
     public void onMessageDelivered(ChatMessage chatMessage) {
         // Update UI to show the message has been delivered
+    }
+
+    @Override
+    public void updateUsername(String username) {
+        User.setUsername(username);
+        getSupportActionBar().setTitle("Chatting as " + username);
     }
 }

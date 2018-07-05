@@ -24,23 +24,15 @@ package com.mayurrokade.chatapp.eventservice;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.data.ChatMessage;
-import com.mayurrokade.chatapp.util.TextUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.URISyntaxException;
-import java.security.InvalidParameterException;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
-import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -48,9 +40,9 @@ import io.socket.emitter.Emitter;
 public class EventServiceImpl implements EventService {
 
     private static final String TAG = EventServiceImpl.class.getSimpleName();
+    private static final String SOCKET_URL = "https://socket-io-chat.now.sh";
     private static EventService INSTANCE;
     private static EventListener mEventListener;
-    private static final String SOCKET_URL = "https://socket-io-chat.now.sh";
     private static Socket mSocket;
     private String mUsername;
 

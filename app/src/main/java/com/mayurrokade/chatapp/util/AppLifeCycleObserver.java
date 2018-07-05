@@ -46,7 +46,7 @@ public class AppLifeCycleObserver implements LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void onEnterForeground() {
         try {
-            EventServiceImpl.getInstance().connect(Constants.USER_NAME);
+            EventServiceImpl.getInstance().connect(User.getUsername());
         } catch (URISyntaxException e) {
             Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_LONG).show();
             e.printStackTrace();

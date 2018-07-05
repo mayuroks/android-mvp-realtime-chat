@@ -29,6 +29,8 @@ import com.mayurrokade.chatapp.data.source.Repository;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.util.schedulers.BaseSchedulerProvider;
 
+import java.net.URISyntaxException;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -65,7 +67,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     @Override
-    public void subscriber() {
+    public void subscribe() {
 
     }
 
@@ -93,5 +95,18 @@ public class ChatPresenter implements ChatContract.Presenter {
                         });
 
         mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void changeUsername(String username) {
+        try {
+            mRepository.disconnect();
+            mRepository.connect(username);
+            mView.updateUsername(username);
+            mView.showMessage("Username set", false);
+        } catch (URISyntaxException e) {
+            mView.showMessage("Changing username failed", true);
+            e.printStackTrace();
+        }
     }
 }

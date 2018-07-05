@@ -31,10 +31,14 @@ public interface ChatContract {
     interface View extends BaseView<Presenter> {
 
         void onMessageDelivered(ChatMessage chatMessage);
+
+        void updateUsername(String username);
     }
 
     interface Presenter extends BasePresenter {
 
         void sendMessage(ChatMessage chatMessage);
+
+        void changeUsername(String username);
     }
 }
