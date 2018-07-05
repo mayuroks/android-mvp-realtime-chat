@@ -88,7 +88,7 @@ public class ChatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.change_name) {
-            showSetUsernameDialog();
+            askUsername();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -99,13 +99,10 @@ public class ChatActivity
         etSendMessage = findViewById(R.id.etSendMessage);
         ivSendMessage = findViewById(R.id.btnSendMessage);
 
-        if (TextUtils.isValidString(User.getUsername())) {
-            String title = "Realtime MVP Chat";
-            getSupportActionBar().setTitle(title);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_logo_no_background);
-        }
+        String title = "Realtime MVP Chat";
+        getSupportActionBar().setTitle(title);
 
+        askUsername();
         setupChatMessages();
         setupSendButton();
     }
@@ -173,12 +170,12 @@ public class ChatActivity
         rvChatMessages.scrollToPosition(mChatAdapter.getItemCount() - 1);
     }
 
-    private void showSetUsernameDialog() {
+    private void askUsername() {
         final Context context = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(
                 R.layout.dialog_set_username, null);
-        final AlertDialog dialog = builder.setView(view).create();
+        final AlertDialog dialog = builder.setView(view).setCancelable(false).create();
 
         Button btnSave = view.findViewById(R.id.btnSave);
         Button btnClose = view.findViewById(R.id.btnClose);
@@ -253,6 +250,5 @@ public class ChatActivity
     @Override
     public void updateUsername(String username) {
         User.setUsername(username);
-        getSupportActionBar().setTitle("Chatting as " + username);
     }
 }
