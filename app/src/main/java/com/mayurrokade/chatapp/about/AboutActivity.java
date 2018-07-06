@@ -22,6 +22,8 @@
 
 package com.mayurrokade.chatapp.about;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -37,10 +39,10 @@ import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
 /*
-* TODO get Medium vector icon
-* TODO LinkedIn get vector icon
-* TODO make elements and set OnClickListeners
-* */
+ * TODO get Medium vector icon
+ * TODO LinkedIn get vector icon
+ * TODO make elements and set OnClickListeners
+ * */
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -57,8 +59,26 @@ public class AboutActivity extends AppCompatActivity {
                 .isRTL(false)
                 .setImage(R.drawable.ic_logo_no_background)
                 .addItem(new Element().setTitle("Developed by: Mayur Rokade"))
-                .addItem(new Element().setTitle("LinkedIn"))
-                .addWebsite("https://medium.com/@mayuroks")
+                .addItem(new Element().setTitle("LinkedIn")
+                        .setIconDrawable(R.drawable.ic_linkedin_logo)
+                        .setIconTint(R.color.colorTextRegular)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Uri webpage = Uri.parse("https://linkedin.com/in/mayurrokade/");
+                                startActivity(new Intent(Intent.ACTION_VIEW, webpage));
+                            }
+                        }))
+                .addItem(new Element().setTitle("Medium")
+                        .setIconDrawable(R.drawable.ic_medium_logo)
+                        .setIconTint(R.color.colorTextRegular)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Uri webpage = Uri.parse("https://medium.com/@mayuroks");
+                                startActivity(new Intent(Intent.ACTION_VIEW, webpage));
+                            }
+                        }))
                 .addGitHub("mayuroks")
                 .addFacebook("mayurzenith")
                 .addInstagram("mayurzenith")
