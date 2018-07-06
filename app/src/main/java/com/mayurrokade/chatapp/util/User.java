@@ -22,9 +22,16 @@
 
 package com.mayurrokade.chatapp.util;
 
+import java.util.UUID;
+
 public class User {
 
-    private static String USER_NAME = "Some_User";
+    public static final String USER_SUFFIX = "_User";
+    private static boolean isUpdated = false;
+
+    // Set random username
+    private static String USER_NAME
+            = UUID.randomUUID().toString().substring(0,5) + USER_SUFFIX;
 
     public static String getUsername() {
         return USER_NAME;
@@ -32,5 +39,10 @@ public class User {
 
     public static void setUsername(String userName) {
         USER_NAME = userName;
+        isUpdated = true;
+    }
+
+    public static boolean isUsernameUpdated() {
+        return isUpdated;
     }
 }

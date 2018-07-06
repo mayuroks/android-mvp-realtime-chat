@@ -24,6 +24,7 @@ package com.mayurrokade.chatapp.chat;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -45,6 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mayurrokade.chatapp.R;
+import com.mayurrokade.chatapp.about.AboutActivity;
 import com.mayurrokade.chatapp.data.ChatMessage;
 import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.util.Injection;
@@ -131,7 +133,8 @@ public class ChatActivity
 
         getSupportActionBar().setTitle("Realtime MVP Chat");
 
-        askUsername();
+        if (!User.isUsernameUpdated()) askUsername();
+
         setupChatMessages();
         setupSendButton();
         setupTextWatcher();
@@ -271,9 +274,7 @@ public class ChatActivity
     }
 
     private void showInfo() {
-        // TODO show info about the app
-        // About the developer
-        showMessage("Info clicked", false);
+        startActivity(new Intent(this, AboutActivity.class));
     }
 
     private void setupTextWatcher() {

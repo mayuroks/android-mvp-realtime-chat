@@ -35,11 +35,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // Set random username
-        String randomPrefix = UUID.randomUUID().toString().substring(0,5);
-        String username = randomPrefix + "_User";
-        User.setUsername(username);
-
         // Init lifeCycleObserver using application context
         AppLifeCycleObserver lifeCycleObserver
                 = new AppLifeCycleObserver(getApplicationContext());

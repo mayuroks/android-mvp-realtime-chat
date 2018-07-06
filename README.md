@@ -4,4 +4,4 @@ Android MVP Realtime Chat using RxJava and Socket.io
 # TODO
  - Some test cases
  - Update readme explanation of isolation
- - Implement isTyping and stopTyping
+ - BUG - if user is typing and leaves the chat, is typing is not removed
