@@ -90,7 +90,7 @@ public class ChatPresenter implements ChatContract.Presenter {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                mView.showMessage(throwable.getMessage(), true);
+                                mView.showAlert(throwable.getMessage(), true);
                             }
                         });
 
@@ -103,9 +103,9 @@ public class ChatPresenter implements ChatContract.Presenter {
             mRepository.disconnect();
             mRepository.connect(username);
             mView.updateUsername(username);
-            mView.showMessage("Username set", false);
+            mView.showAlert("Username set", false);
         } catch (URISyntaxException e) {
-            mView.showMessage("Changing username failed", true);
+            mView.showAlert("Changing username failed", true);
             e.printStackTrace();
         }
     }

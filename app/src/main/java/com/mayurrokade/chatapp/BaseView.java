@@ -28,9 +28,9 @@ public interface BaseView<T> {
 
     void setPresenter(T presenter);
 
-    void showMessage(String message, boolean isError);
+    void showAlert(String message, boolean isError);
 
-    void hideMessage();
+    void hideAlert();
 
     void showProgress();
 

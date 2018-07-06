@@ -146,8 +146,8 @@ public class ChatActivity
     }
 
     @Override
-    public void showMessage(final String message, final boolean isError) {
-        Log.i(TAG, "showMessage: " + message);
+    public void showAlert(final String message, final boolean isError) {
+        Log.i(TAG, "showAlert: " + message);
         final int successColor = ContextCompat.getColor(this, R.color.colorSuccess);
         final int errorColor = ContextCompat.getColor(this, R.color.colorError);
 
@@ -176,7 +176,7 @@ public class ChatActivity
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        hideMessage();
+                                        hideAlert();
                                     }
                                 }, ALERT_LENGTH);
                             }
@@ -186,7 +186,7 @@ public class ChatActivity
     }
 
     @Override
-    public void hideMessage() {
+    public void hideAlert() {
         tvAlert.animate()
                 .translationY(-1 * mAlerterHeight)
                 .setDuration(500)
@@ -304,22 +304,22 @@ public class ChatActivity
 
     @Override
     public void onConnect(final Object... args) {
-        showMessage("Connected", false);
+        showAlert("Connected", false);
     }
 
     @Override
     public void onDisconnect(final Object... args) {
-        showMessage("Disconnected", false);
+        showAlert("Disconnected", false);
     }
 
     @Override
     public void onConnectError(final Object... args) {
-        showMessage("No internet connection", true);
+        showAlert("No internet connection", true);
     }
 
     @Override
     public void onConnectTimeout(final Object... args) {
-        showMessage("Connection Timeout", false);
+        showAlert("Connection Timeout", false);
 
     }
 
@@ -358,7 +358,7 @@ public class ChatActivity
             return;
         }
 
-        showMessage(username + " has joined", false);
+        showAlert(username + " has joined", false);
     }
 
     @Override
@@ -374,7 +374,7 @@ public class ChatActivity
             return;
         }
 
-        showMessage(username + " has left", false);
+        showAlert(username + " has left", false);
     }
 
     @Override

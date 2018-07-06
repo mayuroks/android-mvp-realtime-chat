@@ -38,12 +38,6 @@ import java.util.Calendar;
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
-/*
- * TODO get Medium vector icon
- * TODO LinkedIn get vector icon
- * TODO make elements and set OnClickListeners
- * */
-
 public class AboutActivity extends AppCompatActivity {
 
     @Override
