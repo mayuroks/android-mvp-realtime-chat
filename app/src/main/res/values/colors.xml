@@ -13,4 +13,13 @@
 
     <!-- Background colors -->
     <color name="colorBackground">@color/colorPrimaryDark</color>
+
+    <!-- About page colors -->
+    <color name="about_item_icon_color">@color/colorTextRegular</color>
+    <color name="about_facebook_color">#3b5998</color>
+    <color name="about_twitter_color">#55acee</color>
+    <color name="about_instagram_color">@color/colorTextRegular</color>
+    <color name="about_play_store_color">#45BBC2</color>
+    <color name="about_youtube_color">#cd201f</color>
+    <color name="about_github_color">@color/colorTextRegular</color>
 </resources>

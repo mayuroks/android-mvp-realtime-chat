@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ChatApp</string>
+
+    <string name="about_page_description" translatable="false">This app is an example of Realtime Android MVP architecture. This is just a proposed architecture and many improvements are possible.</string>
+
+    <string name="about_contact_us">Email</string>
+    <string name="about_instagram">Instagram</string>
+    <string name="about_facebook">Facebook</string>
+    <string name="about_twitter">Twitter</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_website">Medium</string>
+    <string name="copy_right" translatable="false">Copyrights © %1$d</string>
 </resources>

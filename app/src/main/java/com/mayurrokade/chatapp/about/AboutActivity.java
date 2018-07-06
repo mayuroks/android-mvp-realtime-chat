@@ -22,14 +22,25 @@
 
 package com.mayurrokade.chatapp.about;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mayurrokade.chatapp.R;
 
+import java.util.Calendar;
+
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
+
+/*
+* TODO get Medium vector icon
+* TODO LinkedIn get vector icon
+* TODO make elements and set OnClickListeners
+* */
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -38,23 +49,51 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        getSupportActionBar().setTitle("About The App");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.ic_logo_no_background)
-                .addItem(new Element().setTitle("Version 6.2"))
-//                .addItem(adsElement)
-                .addGroup("Connect with us")
-                .addEmail("elmehdi.sakout@gmail.com")
-                .addWebsite("http://medyo.github.io/")
-                .addFacebook("the.medy")
-                .addTwitter("medyo80")
-                .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
-                .addPlayStore("com.ideashower.readitlater.pro")
-                .addInstagram("medyo80")
-                .addGitHub("medyo")
-//                .addItem(getCopyRightsElement())
+                .addItem(new Element().setTitle("Developed by: Mayur Rokade"))
+                .addItem(new Element().setTitle("LinkedIn"))
+                .addWebsite("https://medium.com/@mayuroks")
+                .addGitHub("mayuroks")
+                .addFacebook("mayurzenith")
+                .addInstagram("mayurzenith")
+                .addTwitter("mayuroks")
+                .addEmail("mayurzenith@gmail.com")
+                .addItem(getCopyRightsElement())
                 .create();
 
         setContentView(aboutPage);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    Element getCopyRightsElement() {
+        Element copyRightsElement = new Element();
+        final String copyrights = String.format(getString(R.string.copy_right),
+                Calendar.getInstance().get(Calendar.YEAR));
+        copyRightsElement.setTitle(copyrights);
+        copyRightsElement.setIconDrawable(R.drawable.about_icon_copy_right);
+        copyRightsElement.setIconTint(mehdi.sakout.aboutpage.R.color.about_item_icon_color);
+        copyRightsElement.setIconNightTint(android.R.color.white);
+        copyRightsElement.setGravity(Gravity.CENTER);
+        copyRightsElement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AboutActivity.this, copyrights, Toast.LENGTH_SHORT).show();
+            }
+        });
+        return copyRightsElement;
     }
 }
