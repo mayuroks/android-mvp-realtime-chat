@@ -3,7 +3,8 @@
     <color name="colorPrimary">#2A3642</color>
     <color name="colorPrimaryDark">#202932</color>
     <color name="colorAccent">#665bff</color>
-    <color name="colorAlert">#4CAF50</color>
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorError">#e53935</color>
 
     <!-- Text colors -->
     <color name="colorTextHighlight">#665bff</color>

@@ -11,7 +11,7 @@
         android:id="@+id/tvAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAlert"
+        android:background="@color/colorSuccess"
         android:paddingBottom="8dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

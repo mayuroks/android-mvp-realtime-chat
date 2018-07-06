@@ -26,6 +26,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -142,13 +143,24 @@ public class ChatActivity
     }
 
     @Override
-    public void showMessage(final String message, boolean isError) {
+    public void showMessage(final String message, final boolean isError) {
+        Log.i(TAG, "showMessage: " + message);
+        final int successColor = ContextCompat.getColor(this, R.color.colorSuccess);
+        final int errorColor = ContextCompat.getColor(this, R.color.colorError);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                tvAlert.setText(message);
+
+                if (isError) {
+                    tvAlert.setBackgroundColor(errorColor);
+                } else {
+                    tvAlert.setBackgroundColor(successColor);
+                }
+
                 mAlerterHeight = tvAlert.getHeight();
                 tvAlert.setTranslationY(-1 * mAlerterHeight);
-                tvAlert.setText(message);
 
                 tvAlert.animate()
                         .translationY(0)
@@ -291,14 +303,17 @@ public class ChatActivity
 
     @Override
     public void onConnect(final Object... args) {
+        showMessage("Connected", false);
     }
 
     @Override
     public void onDisconnect(final Object... args) {
+        showMessage("Disconnected", false);
     }
 
     @Override
     public void onConnectError(final Object... args) {
+        showMessage("No internet connection", true);
     }
 
     @Override
