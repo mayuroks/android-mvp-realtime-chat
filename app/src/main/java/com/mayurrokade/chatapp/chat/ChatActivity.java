@@ -134,7 +134,11 @@ public class ChatActivity
 
         getSupportActionBar().setTitle("Realtime MVP Chat");
 
-        if (!User.isUsernameUpdated()) askUsername();
+        // Ask the user to set a username,
+        // when the app opens up.
+        if (!User.isUsernameUpdated()) {
+            askUsername();
+        }
 
         setupChatMessages();
         setupSendButton();

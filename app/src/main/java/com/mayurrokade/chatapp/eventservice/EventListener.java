@@ -22,6 +22,10 @@
 
 package com.mayurrokade.chatapp.eventservice;
 
+/**
+ * Main interface to listen to server events.
+ *
+ */
 public interface EventListener {
 
     void onConnect(Object... args);

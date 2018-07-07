@@ -35,6 +35,13 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
+/**
+ * Listens to user actions and sends data to remote data source.
+ *
+ * The presenter sets View's EventListener to the Repository.
+ * Whenever the server sends events to the Repository, it passes those
+ * events to the View via eventListener.
+ */
 public class ChatPresenter implements ChatContract.Presenter {
 
     @NonNull
@@ -50,18 +57,32 @@ public class ChatPresenter implements ChatContract.Presenter {
     private final ChatContract.View mView;
 
     @NonNull
-    private final EventListener mEventListener;
+    private final EventListener mViewEventListener;
 
+    /**
+     * Use this constructor to create a new ChatPresenter.
+     *
+     * @param view                  {@link ChatContract.View}
+     * @param eventListener         {@link EventListener} listens to server events.
+     * @param schedulerProvider     {@link BaseSchedulerProvider}
+     * @param repository            {@link Repository}
+     */
     public ChatPresenter(@NonNull ChatContract.View view,
                          @NonNull EventListener eventListener,
                          @NonNull BaseSchedulerProvider schedulerProvider,
                          @NonNull Repository repository) {
         mView = view;
-        mEventListener = eventListener;
-        mRepository = repository;
-        repository.setEventListener(mEventListener);
+        mViewEventListener = eventListener;
         mSchedulerProvider = schedulerProvider;
+        mRepository = repository;
+
+        // Setting the view's eventListener in the repository so that
+        // when server sends events to repository, it passes the
+        // events to the view
+        mRepository.setEventListener(mViewEventListener);
+
         mCompositeDisposable = new CompositeDisposable();
+
         mView.setPresenter(this);
         mView.initView();
     }

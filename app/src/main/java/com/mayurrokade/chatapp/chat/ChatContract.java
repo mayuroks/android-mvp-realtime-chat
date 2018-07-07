@@ -26,6 +26,10 @@ import com.mayurrokade.chatapp.BasePresenter;
 import com.mayurrokade.chatapp.BaseView;
 import com.mayurrokade.chatapp.data.ChatMessage;
 
+/**
+ * This is a contract between chat view and chat presenter.
+ *
+ */
 public interface ChatContract {
 
     interface View extends BaseView<Presenter> {

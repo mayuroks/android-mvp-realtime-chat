@@ -37,6 +37,10 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
+/**
+ * Implementation of {@link EventService} which connects and disconnects to the server.
+ * It also sends and receives events from the server.
+ */
 public class EventServiceImpl implements EventService {
 
     private static final String TAG = EventServiceImpl.class.getSimpleName();
@@ -55,8 +59,14 @@ public class EventServiceImpl implements EventService {
     private static Socket mSocket;
     private String mUsername;
 
+    // Prevent direct instantiation
     private EventServiceImpl() {}
 
+    /**
+     * Returns single instance of this class, creating it if necessary.
+     *
+     * @return
+     */
     public static EventService getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new EventServiceImpl();
@@ -65,10 +75,19 @@ public class EventServiceImpl implements EventService {
         return INSTANCE;
     }
 
+    /**
+     * Connect to the server.
+     *
+     * @param username
+     * @throws URISyntaxException
+     */
     @Override
     public void connect(String username) throws URISyntaxException {
         mUsername = username;
         mSocket = IO.socket(SOCKET_URL);
+
+        // Register the incoming events and their listeners
+        // on the socket.
         mSocket.on(EVENT_CONNECT, onConnect);
         mSocket.on(EVENT_DISCONNECT, onDisconnect);
         mSocket.on(EVENT_CONNECT_ERROR, onConnectError);
@@ -78,14 +97,25 @@ public class EventServiceImpl implements EventService {
         mSocket.on(EVENT_USER_LEFT, onUserLeft);
         mSocket.on(EVENT_TYPING, onTyping);
         mSocket.on(EVENT_STOP_TYPING, onStopTyping);
+
         mSocket.connect();
     }
 
+    /**
+     * Disconnect from the server.
+     *
+     */
     @Override
     public void disconnect() {
         if (mSocket != null) mSocket.disconnect();
     }
 
+    /**
+     * Send chat message to the server.
+     *
+     * @param chatMessage
+     * @return
+     */
     @Override
     public Flowable<ChatMessage> sendMessage(@NonNull final ChatMessage chatMessage) {
         return Flowable.create(new FlowableOnSubscribe<ChatMessage>() {
@@ -94,7 +124,7 @@ public class EventServiceImpl implements EventService {
                 /*
                  * Socket.io supports acking messages.
                  * This feature can be used as
-                 * mSocket.emit("new message", chatMessage.getMessage(), new Ack() {
+                 * mSocket.emit("EVENT_NEW_MESSAGE", chatMessage.getMessage(), new Ack() {
                  *   @Override
                  *   public void call(Object... args) {
                  *       // Do something with args
@@ -115,19 +145,35 @@ public class EventServiceImpl implements EventService {
         }, BackpressureStrategy.BUFFER);
     }
 
+    /**
+     * Send typing event to the server.
+     *
+     */
     @Override
     public void onTyping() {
         mSocket.emit(EVENT_TYPING);
     }
 
+    /**
+     * Send stop typing event to the server.
+     *
+     */
     @Override
     public void onStopTyping() {
         mSocket.emit(EVENT_STOP_TYPING);
     }
 
+    /**
+     * Set eventListener.
+     *
+     * When server sends events to the socket, those events are passed to the
+     * RemoteDataSource -> Repository -> Presenter -> View using EventListener.
+     *
+     * @param eventListener
+     */
     @Override
-    public void setEventListener(EventListener listener) {
-        mEventListener = listener;
+    public void setEventListener(EventListener eventListener) {
+        mEventListener = eventListener;
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {

@@ -35,6 +35,10 @@ import com.mayurrokade.chatapp.data.ChatMessage;
 
 import java.util.List;
 
+/**
+ * ChatMessages adapter.
+ *
+ */
 public class ChatMessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ChatMessage> mItems;
@@ -93,6 +97,11 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mItems.get(position).getType();
     }
 
+    /**
+     * Use this method to add new chat message to to the RecyclerView.
+     *
+     * @param chatMessage
+     */
     public void addNewMessage(@NonNull ChatMessage chatMessage) {
         mItems.add(chatMessage);
         notifyItemInserted(mItems.size() - 1);

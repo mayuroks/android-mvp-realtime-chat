@@ -35,9 +35,11 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Observer to detect if the app is in background or foreground.
         AppLifeCycleObserver lifeCycleObserver
                 = new AppLifeCycleObserver(getApplicationContext());
 
+        // Adding the above observer to process lifecycle
         ProcessLifecycleOwner.get()
                 .getLifecycle()
                 .addObserver(lifeCycleObserver);

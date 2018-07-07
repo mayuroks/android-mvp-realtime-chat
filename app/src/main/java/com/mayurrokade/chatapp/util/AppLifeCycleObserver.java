@@ -32,10 +32,19 @@ import com.mayurrokade.chatapp.eventservice.EventServiceImpl;
 
 import java.net.URISyntaxException;
 
+/**
+ * Closes the socket connection when app is in background and
+ * connects to socket when the app is in foreground.
+ */
 public class AppLifeCycleObserver implements LifecycleObserver {
 
     private Context mContext;
 
+    /**
+     * Use this constructor to create a new AppLifeCycleObserver
+     *
+     * @param context
+     */
     public AppLifeCycleObserver(Context context) {
         mContext = context;
     }
@@ -48,7 +57,7 @@ public class AppLifeCycleObserver implements LifecycleObserver {
         try {
             EventServiceImpl.getInstance().connect(User.getUsername());
         } catch (URISyntaxException e) {
-            Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "Failed to connect to chat server.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
