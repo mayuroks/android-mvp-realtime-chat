@@ -5,6 +5,7 @@
     <color name="colorAccent">#665bff</color>
     <color name="colorSuccess">#4CAF50</color>
     <color name="colorError">#e53935</color>
+    <color name="colorSeparator">#5d7791</color>
 
     <!-- Text colors -->
     <color name="colorTextHighlight">#665bff</color>

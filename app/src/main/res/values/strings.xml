@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ChatApp</string>
 
-    <string name="about_page_description" translatable="false">This app is an example of Realtime Android MVP architecture. This is just a proposed architecture and many improvements are possible.</string>
+    <string name="about_page_description" translatable="false">Android MVP - Realtime Architecture \n- by Mayur Rokade. \n\nThis is a demo app for the proposed architecture. Suggestions for further improvements are most welcome.</string>
 
     <string name="about_contact_us">Email</string>
     <string name="about_instagram">Instagram</string>

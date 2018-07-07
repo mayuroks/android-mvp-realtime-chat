@@ -2,6 +2,6 @@
 Android MVP Realtime Chat using RxJava and Socket.io
 
 # TODO
+ - Set user name dialog save and close button position change
  - Some test cases
  - Update readme explanation of isolation
- - BUG - if user is typing and leaves the chat, is typing is not removed

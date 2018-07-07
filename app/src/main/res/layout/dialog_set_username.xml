@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Set Your Username"
+        android:text="Set your username"
         android:textSize="20sp" />
 
     <EditText
@@ -36,20 +36,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnClose"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:text="Save" />
+            android:background="@color/colorPrimary"
+            android:text="Close" />
 
         <Button
-            android:id="@+id/btnClose"
+            android:id="@+id/btnSave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="Close" />
+            android:background="@color/colorAccent"
+            android:text="Save" />
     </LinearLayout>
 </LinearLayout>

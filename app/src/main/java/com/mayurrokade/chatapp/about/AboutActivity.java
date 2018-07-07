@@ -51,8 +51,8 @@ public class AboutActivity extends AppCompatActivity {
 
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
-                .setImage(R.drawable.ic_logo_no_background)
-                .addItem(new Element().setTitle("Developed by: Mayur Rokade"))
+                .setImage(R.drawable.profile_image_round)
+                .addItem(new Element().setTitle("Get in touch"))
                 .addItem(new Element().setTitle("LinkedIn")
                         .setIconDrawable(R.drawable.ic_linkedin_logo)
                         .setIconTint(R.color.colorTextRegular)

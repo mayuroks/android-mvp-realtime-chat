@@ -251,14 +251,15 @@ public class ChatActivity
         Button btnSave = view.findViewById(R.id.btnSave);
         Button btnClose = view.findViewById(R.id.btnClose);
         final EditText etUsername = view.findViewById(R.id.etUsername);
+        etUsername.setText(User.getUsername());
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
                 String username = etUsername.getText().toString().trim();
                 if (TextUtils.isValidString(username)) {
                     mPresenter.changeUsername(username);
+                    dialog.dismiss();
                 }
             }
         });
