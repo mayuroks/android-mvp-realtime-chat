@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ChatApp</string>
+    <string name="app_name">Socket Chat</string>
 
-    <string name="about_page_description" translatable="false">Android MVP - Realtime Architecture \n- by Mayur Rokade. \n\nThis is a demo app for the proposed architecture. Suggestions for further improvements are most welcome.</string>
+    <string name="about_page_description" translatable="false">Android MVP - Realtime Architecture \n- by Mayur Rokade. \n\nThe app connects to Socket.io chat room at https://socket-io-chat.now.sh. Also, this is a demo app for the proposed architecture. You can read more about the architecture on my Medium blog. Suggestions for further improvements are most welcome.</string>
 
     <string name="about_contact_us">Email</string>
     <string name="about_instagram">Instagram</string>
