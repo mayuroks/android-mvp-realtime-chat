@@ -22,6 +22,9 @@
 
 package com.mayurrokade.chatapp.data;
 
+/**
+ * ChatMessage model
+ */
 public class ChatMessage {
     public static final int TYPE_MESSAGE_SENT = 393;
     public static final int TYPE_MESSAGE_RECEIVED = 529;
@@ -30,32 +33,69 @@ public class ChatMessage {
     private String message;
     private int type;
 
+    /**
+     * Use this constructor to create a new ChatMessage.
+     *
+     * @param username      Username of the user
+     * @param message       The text message user wants to send
+     * @param type          Type of message. Whether it's a SENT or RECEIVED message
+     */
     public ChatMessage(String username, String message, int type) {
         this.username = username;
         this.message = message;
         this.type = type;
     }
 
+    /**
+     * Get username from the chat message.
+     *
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Set username for the chat message.
+     *
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Get text message from the chat message.
+     *
+     * @return message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Set text message for the chat message.
+     *
+     * @param message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Get type of the chat message.
+     *
+     * @return type
+     */
     public int getType() {
         return type;
     }
 
+    /**
+     * Set type for the chat message.
+     *
+     * @param type
+     */
     public void setType(int type) {
         this.type = type;
     }

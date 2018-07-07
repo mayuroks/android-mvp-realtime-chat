@@ -29,6 +29,10 @@ import java.net.URISyntaxException;
 
 import io.reactivex.Flowable;
 
+/**
+ * Main interface for accessing data. It extends EventListener to receive
+ * incoming events from a remote data source. In this case, a chat server.
+ */
 public interface DataSource extends EventListener {
 
     void setEventListener(EventListener eventListener);

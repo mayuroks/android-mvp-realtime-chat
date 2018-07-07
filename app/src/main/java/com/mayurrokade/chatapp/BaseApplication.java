@@ -35,11 +35,9 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // Init lifeCycleObserver using application context
         AppLifeCycleObserver lifeCycleObserver
                 = new AppLifeCycleObserver(getApplicationContext());
 
-        // Add life cycle observer to ProcessLifecycleOwner
         ProcessLifecycleOwner.get()
                 .getLifecycle()
                 .addObserver(lifeCycleObserver);

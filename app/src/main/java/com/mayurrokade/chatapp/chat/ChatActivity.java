@@ -67,7 +67,7 @@ public class ChatActivity
     private static final long ALERT_LENGTH = 2000;
     private RecyclerView rvChatMessages;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ChatAdapter mChatAdapter;
+    private ChatMessagesAdapter mChatMessagesAdapter;
     private EditText etSendMessage;
     private ImageView ivSendMessage;
     private LinearLayout llTyping;
@@ -123,6 +123,7 @@ public class ChatActivity
 
     @Override
     public void initView() {
+        // Init UI elements
         rvChatMessages = findViewById(R.id.rvChatMessages);
         etSendMessage = findViewById(R.id.etSendMessage);
         ivSendMessage = findViewById(R.id.btnSendMessage);
@@ -210,9 +211,9 @@ public class ChatActivity
     }
 
     private void setupChatMessages() {
-        mChatAdapter = new ChatAdapter(new ArrayList<ChatMessage>(), this);
+        mChatMessagesAdapter = new ChatMessagesAdapter(new ArrayList<ChatMessage>(), this);
         mLayoutManager = new LinearLayoutManager(this);
-        rvChatMessages.setAdapter(mChatAdapter);
+        rvChatMessages.setAdapter(mChatMessagesAdapter);
         rvChatMessages.setLayoutManager(mLayoutManager);
     }
 
@@ -238,8 +239,8 @@ public class ChatActivity
     }
 
     private void addMessage(ChatMessage chatMessage) {
-        mChatAdapter.addNewMessage(chatMessage);
-        rvChatMessages.scrollToPosition(mChatAdapter.getItemCount() - 1);
+        mChatMessagesAdapter.addNewMessage(chatMessage);
+        rvChatMessages.scrollToPosition(mChatMessagesAdapter.getItemCount() - 1);
     }
 
     private void askUsername() {

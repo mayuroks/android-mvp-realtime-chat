@@ -31,20 +31,35 @@ import java.net.URISyntaxException;
 
 import io.reactivex.Flowable;
 
+/**
+ * Repository can send events to a remote data source and can listen
+ * for incoming events from remote data source as well. This bidirectional
+ * flow of events is what makes the app realtime.
+ *
+ * Repository implements {@link DataSource} which can send and receive events.
+ */
 public class Repository implements DataSource {
 
     private static Repository INSTANCE = null;
     private final DataSource mRemoteDataSource;
-    private final DataSource mLocaldDataSource;
+    private final DataSource mLocalDataSource;
     private EventListener mPresenterEventListener;
 
+    // Prevent direct instantiation
     private Repository(@NonNull DataSource remoteDataSource,
                        @NonNull DataSource localDataSource) {
-        mLocaldDataSource = localDataSource;
+        mLocalDataSource = localDataSource;
         mRemoteDataSource = remoteDataSource;
         mRemoteDataSource.setEventListener(this);
     }
 
+    /**
+     * Returns single instance of this class, creating it if necessary.
+     *
+     * @param remoteDataSource
+     * @param localDataSource
+     * @return
+     */
     public static Repository getInstance(@NonNull DataSource remoteDataSource,
                                          @NonNull DataSource localDataSource) {
         if (INSTANCE == null) {
@@ -52,6 +67,52 @@ public class Repository implements DataSource {
         }
 
         return INSTANCE;
+    }
+
+    @Override
+    public void setEventListener(EventListener eventListener) {
+        mPresenterEventListener = eventListener;
+    }
+
+    /**
+     * Connect to remote chat server.
+     *
+     * @param username
+     * @throws URISyntaxException
+     */
+    @Override
+    public void connect(String username) throws URISyntaxException {
+        mRemoteDataSource.connect(username);
+    }
+
+    /**
+     * Disconnect from remote chat server.
+     *
+     */
+    @Override
+    public void disconnect() {
+        mRemoteDataSource.disconnect();
+    }
+
+    /**
+     * Send chat message.
+     *
+     * @param chatMessage
+     * @return
+     */
+    @Override
+    public Flowable<ChatMessage> sendMessage(ChatMessage chatMessage) {
+        return mRemoteDataSource.sendMessage(chatMessage);
+    }
+
+    @Override
+    public void onTyping() {
+        mRemoteDataSource.onTyping();
+    }
+
+    @Override
+    public void onStopTyping() {
+        mRemoteDataSource.onStopTyping();
     }
 
     @Override
@@ -106,35 +167,5 @@ public class Repository implements DataSource {
     public void onStopTyping(Object... args) {
         if (mPresenterEventListener != null)
             mPresenterEventListener.onStopTyping(args);
-    }
-
-    @Override
-    public void setEventListener(EventListener eventListener) {
-        mPresenterEventListener = eventListener;
-    }
-
-    @Override
-    public Flowable<ChatMessage> sendMessage(ChatMessage chatMessage) {
-        return mRemoteDataSource.sendMessage(chatMessage);
-    }
-
-    @Override
-    public void onTyping() {
-        mRemoteDataSource.onTyping();
-    }
-
-    @Override
-    public void onStopTyping() {
-        mRemoteDataSource.onStopTyping();
-    }
-
-    @Override
-    public void connect(String username) throws URISyntaxException {
-        mRemoteDataSource.connect(username);
-    }
-
-    @Override
-    public void disconnect() {
-        mRemoteDataSource.disconnect();
     }
 }

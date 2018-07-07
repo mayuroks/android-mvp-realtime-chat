@@ -35,12 +35,18 @@ import com.mayurrokade.chatapp.data.ChatMessage;
 
 import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ChatMessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ChatMessage> mItems;
     private Context mContext;
 
-    public ChatAdapter(List<ChatMessage> items, Context context) {
+    /**
+     * Constructor to create a new ChatMessagesAdapter
+     *
+     * @param items
+     * @param context
+     */
+    public ChatMessagesAdapter(List<ChatMessage> items, Context context) {
         mItems = items;
         mContext = context;
     }

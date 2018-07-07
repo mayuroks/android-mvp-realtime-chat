@@ -24,6 +24,9 @@ package com.mayurrokade.chatapp.util;
 
 import java.util.UUID;
 
+/**
+ * Utility to get and set username.
+ */
 public class User {
 
     public static final String USER_SUFFIX = "_User";
@@ -33,15 +36,30 @@ public class User {
     private static String USER_NAME
             = UUID.randomUUID().toString().substring(0,5) + USER_SUFFIX;
 
+    /**
+     * Get username
+     *
+     * @return String username
+     */
     public static String getUsername() {
         return USER_NAME;
     }
 
-    public static void setUsername(String userName) {
-        USER_NAME = userName;
+    /**
+     * Set username
+     *
+     * @param String username
+     */
+    public static void setUsername(String username) {
+        USER_NAME = username;
         isUpdated = true;
     }
 
+    /**
+     * Check if the username has been updated by the user
+     *
+     * @return boolean isUsernameUpdated
+     */
     public static boolean isUsernameUpdated() {
         return isUpdated;
     }

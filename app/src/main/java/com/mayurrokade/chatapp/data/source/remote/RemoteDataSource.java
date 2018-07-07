@@ -32,6 +32,10 @@ import java.net.URISyntaxException;
 
 import io.reactivex.Flowable;
 
+/**
+ * Remote data source.
+ *
+ */
 public class RemoteDataSource implements DataSource {
 
     private static RemoteDataSource INSTANCE;

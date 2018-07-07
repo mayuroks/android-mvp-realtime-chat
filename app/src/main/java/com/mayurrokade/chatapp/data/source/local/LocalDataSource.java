@@ -30,6 +30,9 @@ import java.net.URISyntaxException;
 
 import io.reactivex.Flowable;
 
+/**
+ * Local data source.
+ */
 public class LocalDataSource implements DataSource {
 
     private static LocalDataSource INSTANCE;
