@@ -37,12 +37,11 @@ import io.reactivex.functions.Consumer;
 
 /**
  * Listens to user actions and sends data to remote data source.
- *
- * The presenter sets View's EventListener to the Repository.
- * Whenever the server sends events to the Repository, it passes those
- * events to the View via eventListener.
+ * <p>
+ * Presenter implements EventListener. Whenever the server sends events
+ * to the Repository, it passes those events to the Presenter via EventListener.
  */
-public class ChatPresenter implements ChatContract.Presenter {
+public class ChatPresenter implements ChatContract.Presenter, EventListener {
 
     @NonNull
     private final BaseSchedulerProvider mSchedulerProvider;
@@ -62,10 +61,10 @@ public class ChatPresenter implements ChatContract.Presenter {
     /**
      * Use this constructor to create a new ChatPresenter.
      *
-     * @param view                  {@link ChatContract.View}
-     * @param eventListener         {@link EventListener} listens to server events.
-     * @param schedulerProvider     {@link BaseSchedulerProvider}
-     * @param repository            {@link Repository}
+     * @param view              {@link ChatContract.View}
+     * @param eventListener     {@link EventListener} listens to server events.
+     * @param schedulerProvider {@link BaseSchedulerProvider}
+     * @param repository        {@link Repository}
      */
     public ChatPresenter(@NonNull ChatContract.View view,
                          @NonNull EventListener eventListener,
@@ -79,7 +78,7 @@ public class ChatPresenter implements ChatContract.Presenter {
         // Setting the view's eventListener in the repository so that
         // when server sends events to repository, it passes the
         // events to the view
-        mRepository.setEventListener(mViewEventListener);
+        mRepository.setEventListener(this);
 
         mCompositeDisposable = new CompositeDisposable();
 
@@ -139,5 +138,50 @@ public class ChatPresenter implements ChatContract.Presenter {
     @Override
     public void onStopTyping() {
         mRepository.onStopTyping();
+    }
+
+    @Override
+    public void onConnect(Object... args) {
+        mViewEventListener.onConnect(args);
+    }
+
+    @Override
+    public void onDisconnect(Object... args) {
+        mViewEventListener.onDisconnect(args);
+    }
+
+    @Override
+    public void onConnectError(Object... args) {
+        mViewEventListener.onConnectError(args);
+    }
+
+    @Override
+    public void onConnectTimeout(Object... args) {
+        mViewEventListener.onConnectTimeout(args);
+    }
+
+    @Override
+    public void onNewMessage(Object... args) {
+        mViewEventListener.onNewMessage(args);
+    }
+
+    @Override
+    public void onUserJoined(Object... args) {
+        mViewEventListener.onUserJoined(args);
+    }
+
+    @Override
+    public void onUserLeft(Object... args) {
+        mViewEventListener.onUserLeft(args);
+    }
+
+    @Override
+    public void onTyping(Object... args) {
+        mViewEventListener.onTyping(args);
+    }
+
+    @Override
+    public void onStopTyping(Object... args) {
+        mViewEventListener.onStopTyping(args);
     }
 }
