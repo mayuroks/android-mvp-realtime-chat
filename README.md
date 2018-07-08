@@ -5,7 +5,9 @@
 <h1 align="center"> Socket Chat </h1>
 <h4 align="center">A demo app to showcase Android MVP Realtime architecture.</h4>
 
-Socket Chat app connects to Socket.IO chat room at https://socket-io-chat.now.sh. Also, this is a demo app for the proposed architecture. You can read more about the architecture on my Medium blog. Suggestions for further improvements are most welcome.
+Socket Chat is a demo app built using Android MVP Realtime architecture. You can read more about the architecture on my Medium article https://bit.ly/2KXcTan .
+
+This app connects to Socket.IO chat room at https://socket-io-chat.now.sh. Suggestions for further improvements are most welcome.
 
 ## Screenshot
 <p>
