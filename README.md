@@ -15,9 +15,9 @@ This app connects to Socket.IO chat room at https://socket-io-chat.now.sh. Sugge
 </p>
 
 ## Quick Demo
-<p>
-  <image width="100%" height="100%"  style="margin:40px;" src="https://github.com/mayuroks/android-mvp-realtime-chat/blob/master/images/demo.gif"></image>
-</p>
+Check out this video on YouTube to see the app in action.
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/BJ70gpBXBcU/0.jpg)](http://www.youtube.com/watch?v=BJ70gpBXBcU "Socket Chat - Android MVP Realtime architecture")
 
 
 ## Problem Statement
