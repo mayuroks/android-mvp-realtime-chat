@@ -48,7 +48,6 @@ import android.widget.TextView;
 import com.mayurrokade.chatapp.R;
 import com.mayurrokade.chatapp.about.AboutActivity;
 import com.mayurrokade.chatapp.data.ChatMessage;
-import com.mayurrokade.chatapp.eventservice.EventListener;
 import com.mayurrokade.chatapp.util.Injection;
 import com.mayurrokade.chatapp.util.TextUtils;
 import com.mayurrokade.chatapp.util.User;
@@ -60,7 +59,7 @@ import java.util.ArrayList;
 
 public class ChatActivity
         extends AppCompatActivity
-        implements ChatContract.View, EventListener {
+        implements ChatContract.View {
 
     private static final String TAG = ChatActivity.class.getSimpleName();
     private static final long TYPING_TIMER_LENGTH = 3000;

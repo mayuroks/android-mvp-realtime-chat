@@ -25,6 +25,7 @@ package com.mayurrokade.chatapp.chat;
 import com.mayurrokade.chatapp.BasePresenter;
 import com.mayurrokade.chatapp.BaseView;
 import com.mayurrokade.chatapp.data.ChatMessage;
+import com.mayurrokade.chatapp.eventservice.EventListener;
 
 /**
  * This is a contract between chat view and chat presenter.
@@ -32,14 +33,14 @@ import com.mayurrokade.chatapp.data.ChatMessage;
  */
 public interface ChatContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView<Presenter>, EventListener {
 
         void onMessageDelivered(ChatMessage chatMessage);
 
         void updateUsername(String username);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter, EventListener {
 
         void sendMessage(ChatMessage chatMessage);
 

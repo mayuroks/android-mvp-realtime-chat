@@ -41,7 +41,7 @@ import io.reactivex.functions.Consumer;
  * Presenter implements EventListener. Whenever the server sends events
  * to the Repository, it passes those events to the Presenter via EventListener.
  */
-public class ChatPresenter implements ChatContract.Presenter, EventListener {
+public class ChatPresenter implements ChatContract.Presenter {
 
     @NonNull
     private final BaseSchedulerProvider mSchedulerProvider;
