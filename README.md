@@ -11,14 +11,8 @@ This app connects to Socket.IO chat room at https://socket-io-chat.now.sh. Sugge
 
 ## Screenshot
 <p>
-  <image width="25%" height="25%"  style="margin:40px;" src="https://github.com/mayuroks/android-mvp-realtime-chat/blob/master/images/socket_chat.png"></image>
+  <image width="75%" height="75%" style="margin:40px;" src="https://github.com/mayuroks/android-mvp-realtime-chat/blob/master/images/socket_chat_backdrop.png"></image>
 </p>
-
-## Quick Demo
-Check out this video on YouTube to see the app in action.
-
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/BJ70gpBXBcU/0.jpg)](http://www.youtube.com/watch?v=BJ70gpBXBcU "Socket Chat - Android MVP Realtime architecture")
-
 
 ## Problem Statement
 Most of us Android developers have created apps using the MVP architecture. A regular android app involves making HTTP API calls to the server, getting some data and rendering the view. Using these APIs, you can accomplish things like
@@ -50,7 +44,7 @@ This architecuture is based on request-response model, where the client requests
 So for the app to be realtime app, it should be able to send and receive events/data from the server. Based on this, if we try to draw an architecture, it would look some thing like this.
 
 <p>
-  <image width="100%" height="100%"  style="margin:40px;" src="https://github.com/mayuroks/android-mvp-realtime-chat/blob/master/images/realtime_android_architecture.png"></image>
+  <image width="75%" height="75%"  style="margin:40px;" src="https://github.com/mayuroks/android-mvp-realtime-chat/blob/master/images/Android%20MVP_realtime.png"></image>
 </p>
 
 This Android project is an working implementation of the proposed Android MVP Realtime architecture.
@@ -64,6 +58,11 @@ If you want to try out the app, follow the below steps
  - In the web browser, open https://socket-io-chat.now.sh.
  
 This way you can send message between the app and the web chatroom.
+
+## Quick Demo
+Check out this video on YouTube to see the app in action.
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/BJ70gpBXBcU/0.jpg)](http://www.youtube.com/watch?v=BJ70gpBXBcU "Socket Chat - Android MVP Realtime architecture")
 
 **NOTE:** Sometimes, when you join a Socket.IO chat room on web, it might be a different chat room than the one to which the app is connected. I don't know what causes this since I am not the developer of Socket.IO web chat room.  
 
